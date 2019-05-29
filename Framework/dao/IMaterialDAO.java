@@ -1,18 +1,19 @@
 package dao;
 
 import model.Material;
+import exception.ServiceException;
 import java.util.List;
 
 public interface IMaterialDAO {
 
-	public void adicionar(Material material);
+	public void adicionar(Material material) throws ServiceException;
 
-	public void alterar(Material materialAlterado);
+	public void alterar(Material materialAlterado) throws ServiceException;
 
-	public void remover(Material material);
+	public void remover(Material material) throws ServiceException;
 
-	public Material consultar(long idMaterial);
+	public Material consultar(long idMaterial) throws ServiceException;
 
-	public List<Material> consultarTodos();
+	public List<Material> consultarTodos() throws ServiceException;
 
 }

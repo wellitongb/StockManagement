@@ -15,6 +15,14 @@ public class Cliente extends Usuario {
     private ArrayList<Livro> livrosAlugados = new ArrayList<>();
     private ArrayList<Boolean> rankingCliente = new ArrayList<>();
 	
+    /// CONSTRUTORES 
+    
+    public Cliente(){
+    	
+    	super();
+    	
+    }
+    
     /// GETTERS E SETTERS
     
     public ArrayList<Boolean> getRankingCliente(){
@@ -97,8 +105,17 @@ public class Cliente extends Usuario {
 
     /// METODOS
     
-    @Override
-	public String toString() {
-    	return null;
+	@Override
+	protected String ImplementYourToString() {		
+		String myObjectInString = "";
+		
+		myObjectInString+= " " +  this.getHMapId_DataDeEmprestimoLivros().toString();
+		myObjectInString+= " " + this.getHMapId_RankingLivros();
+		myObjectInString+= " " + this.getLivrosAlugados();
+		myObjectInString+= " " + String.valueOf(this.numeroDevolucoes);
+		myObjectInString+= " " + String.valueOf(this.numeroEmprestimos);
+		myObjectInString+= " " + this.rankingCliente.toString();
+		
+		return myObjectInString;
 	} 
 }

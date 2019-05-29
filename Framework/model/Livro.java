@@ -1,24 +1,25 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-
-import exception.ServiceException;
 
 public class Livro extends Material{
-
+	
 	/// ATRIBUTO
 	
-    private String edicao;
-    private int volume;
-    private String editora;
-    private String titulo;
-    private String autor;
+    private String edicao = "";
+    private int volume = 0;
+    private String editora = "";
+    private String titulo = "";
+    private String autor = "";
     private ArrayList<String> assunto;
-    private Calendar dataDeLancamento;
+    private Data dataDeLancamento;
     private int quantidadeDeTotalDeExemplares;
     private int quantidadeDeExemplaresEmprestados;
 	
+    Livro(){
+    	super();
+    }
+    
     /// GETTERS E SETTERS
     
     public String getEdicao() {
@@ -58,14 +59,7 @@ public class Livro extends Material{
         return this.quantidadeDeTotalDeExemplares;
     }
     
-    public void setQuantidadeDeTotalDeExemplares(int quantidadeDeTotalDeExemplares) throws ServiceException {
-        if(quantidadeDeTotalDeExemplares < this.quantidadeDeExemplaresEmprestados) 
-            throw new ServiceException("Quantidade inválida de exemplares!");
-        
-        if(quantidadeDeTotalDeExemplares == this.quantidadeDeExemplaresEmprestados 
-                && this.getStatus().equals(Status.NaoBloqueado))
-            this.setEstadoLivro(EstadoLivro.ALUGADO);
-        
+    public void setQuantidadeDeTotalDeExemplares(int quantidadeDeTotalDeExemplares) {
         this.quantidadeDeTotalDeExemplares = quantidadeDeTotalDeExemplares;
     }
 
@@ -74,7 +68,8 @@ public class Livro extends Material{
     }
 
     public void setVolume(int volume) {
-        this.volume = volume;
+        if( volume > 0 )
+        	this.volume = volume;
     }
 
     public void setEditora(String editora) {
@@ -93,29 +88,36 @@ public class Livro extends Material{
         this.assunto = assunto;
     }
 
-    public void setDataDeLancamento(Calendar dataDeLancamento){
+    public void setDataDeLancamento(Data dataDeLancamento){
         this.dataDeLancamento = dataDeLancamento;
     }
+    
+    public void setDataDeLancamento(int dia, int mes, int ano){
+        this.dataDeLancamento.set(dia, mes, ano);
+    }
 
-    public void setQuantidadeDeExemplaresEmprestados(int quantidadeDeExemplaresEmprestados) throws ServicoException {
-         if(quantidadeDeExemplaresEmprestados < 0 && quantidadeDeExemplaresEmprestados > this.quantidadeDeTotalDeExemplares) 
-            throw new ServicoException("Quantidade inválida de livros emprestados!");
-         
-         if(this.quantidadeDeTotalDeExemplares == quantidadeDeExemplaresEmprestados 
-                && this.getEstadoLivro().equals(EstadoLivro.DISPONIVEL))
-            this.setEstadoLivro(EstadoLivro.ALUGADO);
-         
+    public void setQuantidadeDeExemplaresEmprestados(int quantidadeDeExemplaresEmprestados) {
         this.quantidadeDeExemplaresEmprestados = quantidadeDeExemplaresEmprestados;
     }
     
-    
-    
+   
     /// METODO
     
     @Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+	protected String ImplementYourToString() {
+    	String myObjectInString = "";
+		
+		myObjectInString+= " " + this.autor;
+		myObjectInString+= " " + this.edicao;
+		myObjectInString+= " " + this.editora;
+		myObjectInString+= " " + String.valueOf(this.quantidadeDeExemplaresEmprestados);
+		myObjectInString+= " " + String.valueOf(this.quantidadeDeTotalDeExemplares);
+		myObjectInString+= " " + this.titulo;
+		myObjectInString+= " " + String.valueOf(this.volume);
+		myObjectInString+= " " + this.assunto.toString();
+		myObjectInString+= " " + this.dataDeLancamento.toString();
+		
+		return myObjectInString;
 	}
 	
 }

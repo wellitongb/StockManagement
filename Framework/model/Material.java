@@ -3,7 +3,6 @@ package model;
 import model.notification.INotificacaoSubject;
 import model.notification.INotificacaoObserver;
 import java.util.List;
-import java.util.Calendar;
 
 public abstract class Material implements INotificacaoSubject {
 
@@ -16,7 +15,7 @@ public abstract class Material implements INotificacaoSubject {
 	private StatusSM status;
 	private String causa;
 	private double valorUnitario;
-	private Calendar dataEntrada;
+	private Data dataEntrada;
 	private List<INotificacaoObserver> observerList;
 	
 	
@@ -84,20 +83,13 @@ public abstract class Material implements INotificacaoSubject {
 		this.valorUnitario = valorUnitario;
 	}
 
-	public String getDataEntradaString(){
-		String result = String.valueOf(this.dataEntrada.get(Calendar.DAY_OF_MONTH)) + "/" +
-				String.valueOf(this.dataEntrada.get(Calendar.MONTH)) + "/" +
-				String.valueOf(this.dataEntrada.get(Calendar.YEAR)); 
-		return result;
-	}
-	
-	public Calendar getDataEntrada(){		
+	public Data getDataEntrada(){		
 		return dataEntrada;
 	}
 	
 
-	public void setDataEntrada(int ano, int mes, int dia) {		
-		this.dataEntrada.set(ano,mes,dia);
+	public void setDataEntrada(int dia, int mes, int ano) {		
+		this.dataEntrada.set(dia,mes,ano);
 	}
 
 	public List<INotificacaoObserver> getObserverList() {
@@ -117,7 +109,7 @@ public abstract class Material implements INotificacaoSubject {
 		String myObjectInString = "";
 		
 		myObjectInString+= this.causa.toString();
-		myObjectInString+= this.getDataEntradaString();
+		myObjectInString+= this.dataEntrada.toString();
 		myObjectInString+= String.valueOf(this.idMaterial);
 		myObjectInString+= this.observerList.toString();
 		myObjectInString+= this.status.toString();

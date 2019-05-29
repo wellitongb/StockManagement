@@ -10,6 +10,10 @@ import model.notification.INotificacaoSubject;
 
 public abstract class Usuario implements INotificacaoObserver, INotificacaoSubject {
 
+	public Usuario() {
+		
+	}
+	
 	/// ATRIBUTOS
 	
 	private long idUsuario;
@@ -104,16 +108,16 @@ public abstract class Usuario implements INotificacaoObserver, INotificacaoSubje
 	public String toString(){
 		String myObjectInString = "";
 		
-		myObjectInString+= this.causa.toString();
-		myObjectInString+= this.login.toString();
-		myObjectInString+= this.nome.toString();
-		myObjectInString+= this.senha.toString();
-		myObjectInString+= String.valueOf(this.idUsuario);
-		myObjectInString+= this.notificacoes.toString();
-		myObjectInString+= this.observerList.toString();
-		myObjectInString+= String.valueOf(this.quantidadeDeMovimentacoes);
-		myObjectInString+= String.valueOf(this.quantidadeTentativasIncorretasDeAcesso);
-		myObjectInString+= this.status.toString();
+		myObjectInString+= " " +  this.causa.toString();
+		myObjectInString+= " " + this.login.toString();
+		myObjectInString+= " " + this.nome.toString();
+		myObjectInString+= " " + this.senha.toString();
+		myObjectInString+= " " + String.valueOf(this.idUsuario);
+		myObjectInString+= " " + this.notificacoes.toString();
+		myObjectInString+= " " + this.observerList.toString();
+		myObjectInString+= " " + String.valueOf(this.quantidadeDeMovimentacoes);
+		myObjectInString+= " " + String.valueOf(this.quantidadeTentativasIncorretasDeAcesso);
+		myObjectInString+= " " + this.status.toString();
 				
 		myObjectInString += ImplementYourToString();
 		return myObjectInString;

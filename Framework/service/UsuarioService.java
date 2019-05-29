@@ -11,7 +11,7 @@ public abstract class UsuarioService {
 
 	protected IUsuarioDAO usuarioDAO;
 	
-	/// MÉTODOS
+	/// METODOS
 
 	public abstract String adicionar(Usuario usuario);
 
