@@ -2,6 +2,9 @@ package model;
 
 import java.util.Queue;
 import java.util.List;
+
+import exception.ServiceException;
+
 import model.notification.INotificacaoObserver;
 import model.notification.INotificacaoSubject;
 
@@ -13,7 +16,7 @@ public abstract class Usuario implements INotificacaoObserver, INotificacaoSubje
 	private String nome;
 	private String login;
 	private String senha;
-	private Status status;
+	private StatusSM status;
 	private int quantidadeDeMovimentacoes;
 	private String causa;
 	private List<INotificacaoObserver> observerList;
@@ -54,12 +57,12 @@ public abstract class Usuario implements INotificacaoObserver, INotificacaoSubje
 		this.senha = senha;
 	}
 
-	public Status getStatus() {
+	public StatusSM getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setStatus(StatusSM statusSM) {
+		this.status = statusSM;
 	}
 
 	public int getQuantidadeDeMovimentacoes() {
@@ -82,18 +85,10 @@ public abstract class Usuario implements INotificacaoObserver, INotificacaoSubje
 		return observerList;
 	}
 
-	public void setObserverList(List<INotificacaoObserver> observerList) {
-		this.observerList = observerList;
-	}
-
 	public Queue<String> getNotificacoes() {
 		return notificacoes;
 	}
-
-	public void setNotificacoes(Queue<String> notificacoes) {
-		this.notificacoes = notificacoes;
-	}
-
+	
 	public int getQuantidadeTentativasIncorretasDeAcesso() {
 		return quantidadeTentativasIncorretasDeAcesso;
 	}
@@ -104,7 +99,25 @@ public abstract class Usuario implements INotificacaoObserver, INotificacaoSubje
 
 	/// MÉTODOS
 	
-	public abstract String toString();
+	protected abstract String ImplementYourToString(); 
+	
+	public String toString(){
+		String myObjectInString = "";
+		
+		myObjectInString+= this.causa.toString();
+		myObjectInString+= this.login.toString();
+		myObjectInString+= this.nome.toString();
+		myObjectInString+= this.senha.toString();
+		myObjectInString+= String.valueOf(this.idUsuario);
+		myObjectInString+= this.notificacoes.toString();
+		myObjectInString+= this.observerList.toString();
+		myObjectInString+= String.valueOf(this.quantidadeDeMovimentacoes);
+		myObjectInString+= String.valueOf(this.quantidadeTentativasIncorretasDeAcesso);
+		myObjectInString+= this.status.toString();
+				
+		myObjectInString += ImplementYourToString();
+		return myObjectInString;
+	}	
 
 	/**
 	 * @see Notification.INotificacaoObserver#notificar(Model.String)
@@ -136,5 +149,9 @@ public abstract class Usuario implements INotificacaoObserver, INotificacaoSubje
 			i.notificar(notificacao);
 	}
 
+	public String getNoficacao() throws ServiceException{
+		if(notificacoes.isEmpty()) throw new ServiceException("Não há notificações cadastradas!");
+		return notificacoes.remove();
+	}
 	
 }

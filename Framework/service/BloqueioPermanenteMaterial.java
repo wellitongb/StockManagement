@@ -1,16 +1,16 @@
 package service;
 
 import model.Material;
-import model.Status;
+import model.StatusSM;
 import dao.IMaterialDAO;
 
-public class BloqueioPermanenteMaterial implements IBloqueioMaterialStrategy {
+public class BloqueioPermanenteMaterial extends BloqueioMaterial {
 
 	/**
-	 * @see service.IBloqueioMaterialStrategy#bloquear(Model.Material, dao.IMaterialDAO, Model.String)
+	 * @see service.BloqueioMaterial#bloquear(Model.Material, dao.IMaterialDAO, Model.String)
 	 */
 	public void bloquear(Material material, IMaterialDAO materialDAO, String causa) {
-		material.setStatus( Status.Permanente );
+		material.setStatus( StatusSM.Permanente );
 		material.setCausa( causa );
 		materialDAO.alterar( material );
 	}

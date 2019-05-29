@@ -24,7 +24,7 @@ public abstract class MaterialService {
 
 	public abstract List<String> consultaEspecifica(List<String> params, List<String> keys);
 
-	public abstract String bloquear(Material material, IBloqueioMaterialStrategy bloqueioMaterial, String causa);
+	public abstract String bloquear(Material material, BloqueioMaterial bloqueioMaterial, String causa);
 
 	public abstract List<String> ranquear(IRankingMaterialStrategy rankingMaterial);
 

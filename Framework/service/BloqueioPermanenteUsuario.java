@@ -2,16 +2,16 @@ package service;
 
 import model.Usuario;
 import dao.IUsuarioDAO;
-import model.Status;
+import model.StatusSM;
 
-public class BloqueioPermanenteUsuario implements IBloqueioUsuarioStrategy {
+public class BloqueioPermanenteUsuario extends BloqueioUsuario {
 
 
 	/**
-	 * @see service.IBloqueioUsuarioStrategy#bloquear(Model.Usuario, dao.IUsuarioDAO, Model.String)
+	 * @see service.BloqueioUsuario#bloquear(Model.Usuario, dao.IUsuarioDAO, Model.String)
 	 */
 	public void bloquear(Usuario usuario, IUsuarioDAO usuarioDAO, String causa) {
-		usuario.setStatus( Status.Permanente );
+		usuario.setStatus( StatusSM.Permanente );
 		usuario.setCausa( causa );
 		usuarioDAO.alterar( usuario );
 	}

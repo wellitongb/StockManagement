@@ -25,7 +25,7 @@ public abstract class UsuarioService {
 
 	public abstract List<String> consultaEspecifica(List<String> params, List<String> keys);
 
-	public abstract String bloquear(Usuario Usuario, IBloqueioUsuarioStrategy bloqueioUsuario, String causa);
+	public abstract String bloquear(Usuario Usuario, BloqueioUsuario bloqueioUsuario, String causa);
 
 	public abstract List<String> ranquear(IRankingUsuarioStrategy rankingUsuario);
 

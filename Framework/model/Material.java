@@ -13,16 +13,23 @@ public abstract class Material implements INotificacaoSubject {
 	private static int quantidadeMateriasTotal;
 	private static int quantidadeEspacoTotal;
 	private int quantidade;
-	private Status status;
+	private StatusSM status;
 	private String causa;
 	private double valorUnitario;
 	private Calendar dataEntrada;
 	private List<INotificacaoObserver> observerList;
 	
+	
+	
 	/// GETTERS E SETTERS
 	
+	/**
+	 * 
+	 * @param 	
+	 * @return
+	 */
 	public long getIdMaterial() {
-		return idMaterial;
+		return this.idMaterial;
 	}
 
 	public void setIdMaterial(long idMaterial) {
@@ -30,7 +37,7 @@ public abstract class Material implements INotificacaoSubject {
 	}
 
 	public static int getQuantidadeMateriasTotal() {
-		return quantidadeMateriasTotal;
+		return Material.quantidadeMateriasTotal;
 	}
 
 	public static void setQuantidadeMateriasTotal(int quantidadeMateriasTotal) {
@@ -38,7 +45,7 @@ public abstract class Material implements INotificacaoSubject {
 	}
 
 	public static int getQuantidadeEspacoTotal() {
-		return quantidadeEspacoTotal;
+		return Material.quantidadeEspacoTotal;
 	}
 
 	public static void setQuantidadeEspacoTotal(int quantidadeEspacoTotal) {
@@ -46,23 +53,23 @@ public abstract class Material implements INotificacaoSubject {
 	}
 
 	public int getQuantidade() {
-		return quantidade;
+		return this.quantidade;
 	}
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
 
-	public Status getStatus() {
-		return status;
+	public StatusSM getStatus() {
+		return this.status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(StatusSM status) {
 		this.status = status;
 	}
 
 	public String getCausa() {
-		return causa;
+		return this.causa;
 	}
 
 	public void setCausa(String causa) {
@@ -70,19 +77,27 @@ public abstract class Material implements INotificacaoSubject {
 	}
 
 	public double getValorUnitario() {
-		return valorUnitario;
+		return this.valorUnitario;
 	}
 
 	public void setValorUnitario(double valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}
 
-	public Calendar getDataEntrada() {
+	public String getDataEntradaString(){
+		String result = String.valueOf(this.dataEntrada.get(Calendar.DAY_OF_MONTH)) + "/" +
+				String.valueOf(this.dataEntrada.get(Calendar.MONTH)) + "/" +
+				String.valueOf(this.dataEntrada.get(Calendar.YEAR)); 
+		return result;
+	}
+	
+	public Calendar getDataEntrada(){		
 		return dataEntrada;
 	}
+	
 
-	public void setDataEntrada(Calendar dataEntrada) {
-		this.dataEntrada = dataEntrada;
+	public void setDataEntrada(int ano, int mes, int dia) {		
+		this.dataEntrada.set(ano,mes,dia);
 	}
 
 	public List<INotificacaoObserver> getObserverList() {
@@ -96,7 +111,23 @@ public abstract class Material implements INotificacaoSubject {
 	
 	/// MÉTODOS
 
-	public abstract String toString();
+	protected abstract String ImplementYourToString(); 
+	
+	public String toString(){
+		String myObjectInString = "";
+		
+		myObjectInString+= this.causa.toString();
+		myObjectInString+= this.getDataEntradaString();
+		myObjectInString+= String.valueOf(this.idMaterial);
+		myObjectInString+= this.observerList.toString();
+		myObjectInString+= this.status.toString();
+		myObjectInString+= String.valueOf(this.valorUnitario);
+		myObjectInString+= String.valueOf(Material.quantidadeEspacoTotal);
+		myObjectInString+= String.valueOf(Material.quantidadeMateriasTotal);
+				
+		myObjectInString += ImplementYourToString();
+		return myObjectInString;
+	}
 
 	/**
 	 * @see Notification.INotificacaoSubject#registrarObserver(Notification.INotificacaoObserver)
