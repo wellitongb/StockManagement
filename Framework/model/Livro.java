@@ -16,7 +16,7 @@ public class Livro extends Material{
     private int quantidadeDeTotalDeExemplares;
     private int quantidadeDeExemplaresEmprestados;
 	
-    Livro(){
+    public Livro(){
     	super();
     }
     

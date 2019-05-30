@@ -9,35 +9,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exception.ServiceException;
-import model.Cliente;
+import model.Funcionario;
 import model.Usuario;
 
-/**
- * JDBC do CRUD Cliente 
- * @version	0.0.2
- */
-public class ClienteDAOJDBC implements IUsuarioDAO{
-
-	private static Connection conn = Conexao.getConnection(); /** Conexao com o banco de dados  */
+public class FuncionarioDAOJDBC implements IUsuarioDAO{
+private static Connection conn = Conexao.getConnection(); /** Conexao com o banco de dados  */
 	
 	/**
-	 * Realiza a insercao de um novo cliente no banco de dados ( INSERT ) 
-	 * @param	cliente	Cliente a ser inserido
+	 * Realiza a insercao de um novo funcionario no banco de dados ( INSERT ) 
+	 * @param	funcionario	Funcionario a ser inserido
 	 * @throws	ServiceException
 	 * @see 	{@link ServiceException} 
 	 */
 	@Override
 	public void adicionar(Usuario usuario) throws ServiceException {
 		
-		Cliente cliente = (Cliente) usuario;
+		Funcionario funcionario = (Funcionario) usuario;
 		
-		String insertSQL = "INSERT INTO Cliente VALUES ( default, ?, ?, ?)";
+		String insertSQL = "INSERT INTO Funcionario VALUES ( default, ?, ?, ?)";
 		
 		try {
 			PreparedStatement pst = conn.prepareStatement(insertSQL);
-			pst.setString(1, cliente.getCpf() );
-			pst.setString(2, cliente.getNome() );
-			pst.setString(3, cliente.getEmail() );
+			pst.setString(1, funcionario.getCpf() );
+			pst.setString(2, funcionario.getNome() );
+			pst.setString(3, funcionario.getEmail() );
 			
 			pst.executeUpdate();
 			conn.commit();
@@ -45,102 +40,102 @@ public class ClienteDAOJDBC implements IUsuarioDAO{
 			
 		}catch( SQLException e) {
 			System.err.println();
-			throw new ServiceException("Erro na insercao de cliente");
+			throw new ServiceException("Erro na insercao de funcionario");
 		}	
 			
-		throw new ServiceException("Insercao de cliente bem sucedida");
+		throw new ServiceException("Insercao de funcionario bem sucedida");
 	
 	}
 		
 	/**
-	 * Realiza a consulta de clientes por meio do cpf no banco de dados ( SELECT )
-	 * @param	cpf	CPF do cliente 
-	 * @return	Cliente correspondente ao cpf 
+	 * Realiza a consulta de funcionarios por meio do cpf no banco de dados ( SELECT )
+	 * @param	cpf	CPF do funcionario 
+	 * @return	Funcionario correspondente ao cpf 
 	 * @throws	ServiceException
 	 * @see		{@link ServiceException}
 	 */
 	@Override
 	public Usuario consultar(String login) throws ServiceException {
-		String selectSQL = "SELECT * FROM Cliente WHERE login = ? ";
-		Cliente cliente = new Cliente();
+		String selectSQL = "SELECT * FROM Funcionario WHERE login = ? ";
+		Funcionario funcionario = new Funcionario();
 		
 		try {
 			Statement stm = conn.createStatement();
 			ResultSet rs = stm.executeQuery(selectSQL);
 			
 			while( rs.next() ) {
-				cliente.setCpf(	rs.getString(1) );
-				cliente.setNome( rs.getString(2)); 
-				cliente.setEmail( rs.getString(3) );
+				funcionario.setCpf(	rs.getString(1) );
+				funcionario.setNome( rs.getString(2)); 
+				funcionario.setEmail( rs.getString(3) );
 				
 			}
 		}catch(SQLException e) {
-			throw new ServiceException("Erro na consulta de cliente");
+			throw new ServiceException("Erro na consulta de funcionario");
 		}	
 		
-		return cliente;
+		return funcionario;
 	}
 	
 	/**
-	 * Realiza a alteracao de dados de determinado cliente por meio do cpf no banco de dados ( UPDATE )
-	 * @param	cliente	Cliente a ser alterado
+	 * Realiza a alteracao de dados de determinado funcionario por meio do cpf no banco de dados ( UPDATE )
+	 * @param	funcionario	Funcionario a ser alterado
 	 * @throws	ServiceException
 	 * @see		{@link ServiceException}	
 	 */
 	@Override
 	public void alterar(Usuario usuarioAlterado) throws ServiceException {
 		
-		Cliente cliente = (Cliente) usuarioAlterado;
+		Funcionario funcionario = (Funcionario) usuarioAlterado;
 		
-		String updateSQL = "UPDATE Cliente SET email = ? WHERE cpf = ? ";
+		String updateSQL = "UPDATE Funcionario SET email = ? WHERE cpf = ? ";
 		
 		try {
 			
 			PreparedStatement pst = conn.prepareStatement(updateSQL);
-			pst.setString(1, cliente.getEmail() );
-			pst.setString(2, cliente.getCpf());
+			pst.setString(1, funcionario.getEmail() );
+			pst.setString(2, funcionario.getCpf());
 			pst.execute();
 			conn.commit();
 			pst.close();
 			
 		}catch(SQLException e) {
 			System.err.println( e.getMessage() );
-			throw new ServiceException("Erro na alteracao de dados de cliente");
+			throw new ServiceException("Erro na alteracao de dados de funcionario");
 		}	
 			
 	}
 	
 	/**
-	 * Realiza a remocao de determinado cliente por meio do cpf no banco de dados ( DELETE )
-	 * @param 	cliente		Cliente a ser removido
+	 * Realiza a remocao de determinado funcionario por meio do cpf no banco de dados ( DELETE )
+	 * @param 	funcionario		Funcionario a ser removido
 	 * @throws 	ServiceException
 	 * @see		{@link ServiceException}
 	 */
 	@Override
 	public void remover(Usuario usuario) throws ServiceException {
 
-		Cliente cliente = (Cliente) usuario;
+		Funcionario funcionario = (Funcionario) usuario;
 		
-		String deleteSQL = "DELETE FROM Cliente WHERE login = ?";
+		String deleteSQL = "DELETE FROM Funcionario WHERE login = ?";
 		
 		try {
 		
 			PreparedStatement pst = conn.prepareStatement(deleteSQL);
-			pst.setString(1, cliente.getLogin());
+			pst.setString(1, funcionario.getLogin());
 			pst.execute();
 			conn.commit();
 			pst.close();
 		
 		}catch(SQLException e) {
-			throw new ServiceException("Erro na remocao de cliente!");
+			throw new ServiceException("Erro na remocao de funcionario!");
 		}	
 		
-		throw new ServiceException("Cliente removido com com sucesso!");
+		throw new ServiceException("Funcionario removido com com sucesso!");
 
 	}
 	
 	/**
-	 * Imprime um lista contendo todos os clientes cadastrados no banco de dados  ( SELECT * )
+	 * Imprime um lista contendo todos os funcionarios cadastrados no banco de dados  ( SELECT * )
 	 * @throws 	ServiceException
 	 * @see		{@link ServiceException} 
 	 */
@@ -148,25 +143,25 @@ public class ClienteDAOJDBC implements IUsuarioDAO{
 	public List<Usuario> consultarTodos() throws ServiceException {
 	
 		String consultaSQL = "SELECT * FROM CLIENTE";
-		List<Cliente> clientes = new ArrayList<Cliente>();
+		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 		
 		try {
 			Statement stm = conn.createStatement();
 			ResultSet rs = stm.executeQuery(consultaSQL);
 				
 			while( rs.next() ) {
-				Cliente cliente = new Cliente( rs.getString(1),
+				Funcionario funcionario = new Funcionario( rs.getString(1),
 												rs.getString(2), 
 												rs.getString(3));
 
-				clientes.add(cliente);
+				funcionarios.add(funcionario);
 			}
 			
 		}catch(SQLException e) {
-			throw new ServiceException("Erro em lista todos os clientes cadastrados");
+			throw new ServiceException("Erro em lista todos os funcionarios cadastrados");
 		}
 		
-		return clientes;
+		return funcionarios;
 	
 	}
 	
@@ -184,5 +179,5 @@ public class ClienteDAOJDBC implements IUsuarioDAO{
 		
 		throw new ServiceException("Desconexao bem sucedida");
 	}
-	
+
 }
