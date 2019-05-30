@@ -9,11 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exception.ServiceException;
+import model.Cliente;
 import model.Funcionario;
 import model.Usuario;
 
 public class FuncionarioDAOJDBC implements IUsuarioDAO{
-private static Connection conn = Conexao.getConnection(); /** Conexao com o banco de dados  */
+	
+	private static Connection conn = Conexao.getConnection(); /** Conexao com o banco de dados  */
 	
 	/**
 	 * Realiza a insercao de um novo funcionario no banco de dados ( INSERT ) 
@@ -30,9 +32,13 @@ private static Connection conn = Conexao.getConnection(); /** Conexao com o banc
 		
 		try {
 			PreparedStatement pst = conn.prepareStatement(insertSQL);
-			pst.setString(1, funcionario.getCpf() );
-			pst.setString(2, funcionario.getNome() );
-			pst.setString(3, funcionario.getEmail() );
+			pst.setString(1, funcionario.getNome() );
+			pst.setString(2, funcionario.getLogin() );
+			pst.setString(3, funcionario.getSenha() );
+			pst.setString(4, funcionario.getStatus().toString() );
+			pst.setInt(5, funcionario.getQuantidadeDeMovimentacoes() );
+			pst.setString(6, funcionario.getCausa() );
+			pst.setDouble(7, funcionario.getSalario() );
 			
 			pst.executeUpdate();
 			conn.commit();
@@ -63,12 +69,13 @@ private static Connection conn = Conexao.getConnection(); /** Conexao com o banc
 			Statement stm = conn.createStatement();
 			ResultSet rs = stm.executeQuery(selectSQL);
 			
-			while( rs.next() ) {
-				funcionario.setCpf(	rs.getString(1) );
-				funcionario.setNome( rs.getString(2)); 
-				funcionario.setEmail( rs.getString(3) );
-				
-			}
+			funcionario.setNome( rs.getString(1) );
+			funcionario.setLogin( rs.getString(2));
+			funcionario.setSenha( rs.getString(3) );
+			funcionario.setStatus( rs.getString(4) ); /// CONVERTER PARA O ENUM
+			funcionario.setQuantidadeDeMovimentacoes( rs.getInt(5) );	
+			funcionario.setCausa( rs.getString(6));
+			
 		}catch(SQLException e) {
 			throw new ServiceException("Erro na consulta de funcionario");
 		}	
@@ -92,8 +99,14 @@ private static Connection conn = Conexao.getConnection(); /** Conexao com o banc
 		try {
 			
 			PreparedStatement pst = conn.prepareStatement(updateSQL);
-			pst.setString(1, funcionario.getEmail() );
-			pst.setString(2, funcionario.getCpf());
+			
+			pst.setString(1, funcionario.getNome() );
+			pst.setString(2, funcionario.getLogin() );
+			pst.setString(3, funcionario.getSenha() );
+			pst.setString(4, funcionario.getStatus().toString() );
+			pst.setInt(5, funcionario.getQuantidadeDeMovimentacoes() );
+			pst.setString(6, funcionario.getCausa() );
+
 			pst.execute();
 			conn.commit();
 			pst.close();
@@ -121,7 +134,14 @@ private static Connection conn = Conexao.getConnection(); /** Conexao com o banc
 		try {
 		
 			PreparedStatement pst = conn.prepareStatement(deleteSQL);
-			pst.setString(1, funcionario.getLogin());
+
+			pst.setString(1, funcionario.getNome() );
+			pst.setString(2, funcionario.getLogin() );
+			pst.setString(3, funcionario.getSenha() );
+			pst.setString(4, funcionario.getStatus().toString() );
+			pst.setInt(5, funcionario.getQuantidadeDeMovimentacoes() );
+			pst.setString(6, funcionario.getCausa() );
+			
 			pst.execute();
 			conn.commit();
 			pst.close();
@@ -143,16 +163,20 @@ private static Connection conn = Conexao.getConnection(); /** Conexao com o banc
 	public List<Usuario> consultarTodos() throws ServiceException {
 	
 		String consultaSQL = "SELECT * FROM CLIENTE";
-		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+		List<Usuario> funcionarios = new ArrayList<Usuario>();
 		
 		try {
 			Statement stm = conn.createStatement();
 			ResultSet rs = stm.executeQuery(consultaSQL);
 				
 			while( rs.next() ) {
-				Funcionario funcionario = new Funcionario( rs.getString(1),
-												rs.getString(2), 
-												rs.getString(3));
+				Funcionario funcionario = new Funcionario( );
+				
+				funcionario.setNome( rs.getString(1) );
+				funcionario.setLogin( rs.getString(2));
+				funcionario.setSenha( rs.getString(3) );
+				funcionario.setStatus( rs.getString(4) ); /// CONVERTER PARA O ENUM
+				funcionario.setQuantidadeDeMovimentacoes( rs.getInt(5) );
 
 				funcionarios.add(funcionario);
 			}

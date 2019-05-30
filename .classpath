@@ -2,6 +2,15 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry excluding="Model/" kind="src" path="BibliotecaJava"/>
-	<classpathentry kind="src" path="Framework/Model"/>
+	<classpathentry kind="lib" path="C:/Users/samuellucas97/Downloads/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/samuellucas97/Downloads/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/samuellucas97/Downloads/hibernate-commons-annotations-4.0.2.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/samuellucas97/Downloads/hibernate-core-4.2.19.Final-redhat-1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/samuellucas97/Downloads/hibernate-entitymanager-4.2.19.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/samuellucas97/Downloads/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/samuellucas97/Downloads/javassist-3.18.1-GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/samuellucas97/Downloads/jboss-logging-3.1.0.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/samuellucas97/Downloads/jboss-transaction-api_1.1_spec-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/samuellucas97/Downloads/postgresql-9.1-903.jdbc4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

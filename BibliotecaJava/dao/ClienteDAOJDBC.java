@@ -35,9 +35,16 @@ public class ClienteDAOJDBC implements IUsuarioDAO{
 		
 		try {
 			PreparedStatement pst = conn.prepareStatement(insertSQL);
-			pst.setString(1, cliente.getCpf() );
-			pst.setString(2, cliente.getNome() );
-			pst.setString(3, cliente.getEmail() );
+			pst.setString(1, cliente.getNome() );
+			pst.setString(2, cliente.getLogin() );
+			pst.setString(3, cliente.getSenha() );
+			pst.setString(4, cliente.getStatus().toString() );
+			pst.setInt(5, cliente.getQuantidadeDeMovimentacoes() );
+			pst.setString(6, cliente.getCausa() );
+			/// FALTA COLOCAR OS ARRAYSLIST
+			pst.setInt(7, cliente.getQuantidadeTentativasIncorretasDeAcesso() );
+			pst.setInt(8, cliente.getNumeroEmprestimos() );
+			pst.setInt(9, cliente.getNumeroDevolucoes() );
 			
 			pst.executeUpdate();
 			conn.commit();
@@ -68,12 +75,17 @@ public class ClienteDAOJDBC implements IUsuarioDAO{
 			Statement stm = conn.createStatement();
 			ResultSet rs = stm.executeQuery(selectSQL);
 			
-			while( rs.next() ) {
-				cliente.setCpf(	rs.getString(1) );
-				cliente.setNome( rs.getString(2)); 
-				cliente.setEmail( rs.getString(3) );
-				
-			}
+			cliente.setNome( rs.getString(1) );
+			cliente.setLogin( rs.getString(2));
+			cliente.setSenha( rs.getString(3) );
+			cliente.setStatus( rs.getString(4) ); /// CONVERTER PARA O ENUM
+			cliente.setQuantidadeDeMovimentacoes( rs.getInt(5) );
+			cliente.setCausa( rs.getString(6));
+			/// FALTA COLOCAR OS ARRAYSLIST
+			cliente.setQuantidadeTentativasIncorretasDeAcesso( rs.getInt(7) );
+			cliente.setNumeroEmprestimos( rs.getInt(8) );
+			cliente.setNumeroDevolucoes(  rs.getInt(9) );
+			
 		}catch(SQLException e) {
 			throw new ServiceException("Erro na consulta de cliente");
 		}	
@@ -97,8 +109,17 @@ public class ClienteDAOJDBC implements IUsuarioDAO{
 		try {
 			
 			PreparedStatement pst = conn.prepareStatement(updateSQL);
-			pst.setString(1, cliente.getEmail() );
-			pst.setString(2, cliente.getCpf());
+			pst.setString(1, cliente.getNome() );
+			pst.setString(2, cliente.getLogin() );
+			pst.setString(3, cliente.getSenha() );
+			pst.setString(4, cliente.getStatus().toString() );
+			pst.setInt(5, cliente.getQuantidadeDeMovimentacoes() );
+			pst.setString(6, cliente.getCausa() );
+			/// FALTA COLOCAR OS ARRAYSLIST
+			pst.setInt(7, cliente.getQuantidadeTentativasIncorretasDeAcesso() );
+			pst.setInt(8, cliente.getNumeroEmprestimos() );
+			pst.setInt(9, cliente.getNumeroDevolucoes() );
+			
 			pst.execute();
 			conn.commit();
 			pst.close();
@@ -126,7 +147,17 @@ public class ClienteDAOJDBC implements IUsuarioDAO{
 		try {
 		
 			PreparedStatement pst = conn.prepareStatement(deleteSQL);
-			pst.setString(1, cliente.getLogin());
+			pst.setString(1, cliente.getNome() );
+			pst.setString(2, cliente.getLogin() );
+			pst.setString(3, cliente.getSenha() );
+			pst.setString(4, cliente.getStatus().toString() );
+			pst.setInt(5, cliente.getQuantidadeDeMovimentacoes() );
+			pst.setString(6, cliente.getCausa() );
+			/// FALTA COLOCAR OS ARRAYSLIST
+			pst.setInt(7, cliente.getQuantidadeTentativasIncorretasDeAcesso() );
+			pst.setInt(8, cliente.getNumeroEmprestimos() );
+			pst.setInt(9, cliente.getNumeroDevolucoes() );
+			
 			pst.execute();
 			conn.commit();
 			pst.close();
@@ -148,17 +179,25 @@ public class ClienteDAOJDBC implements IUsuarioDAO{
 	public List<Usuario> consultarTodos() throws ServiceException {
 	
 		String consultaSQL = "SELECT * FROM CLIENTE";
-		List<Cliente> clientes = new ArrayList<Cliente>();
+		List<Usuario> clientes = new ArrayList<Usuario>();
 		
 		try {
 			Statement stm = conn.createStatement();
 			ResultSet rs = stm.executeQuery(consultaSQL);
 				
 			while( rs.next() ) {
-				Cliente cliente = new Cliente( rs.getString(1),
-												rs.getString(2), 
-												rs.getString(3));
-
+				Cliente cliente = new Cliente( );
+				cliente.setNome( rs.getString(1) );
+				cliente.setLogin( rs.getString(2));
+				cliente.setSenha( rs.getString(3) );
+				cliente.setStatus( rs.getString(4) ); /// CONVERTER PARA O ENUM
+				cliente.setQuantidadeDeMovimentacoes( rs.getInt(5) );
+				cliente.setCausa( rs.getString(6));
+				/// FALTA COLOCAR OS ARRAYSLIST
+				cliente.setQuantidadeTentativasIncorretasDeAcesso( rs.getInt(7) );
+				cliente.setNumeroEmprestimos( rs.getInt(8) );
+				cliente.setNumeroDevolucoes(  rs.getInt(9) );
+				
 				clientes.add(cliente);
 			}
 			
