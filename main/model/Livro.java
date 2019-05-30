@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+//Revisar classe!
+
 public class Livro extends Material{
 	
 	/// ATRIBUTO

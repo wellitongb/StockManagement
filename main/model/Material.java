@@ -4,6 +4,8 @@ import model.notification.INotificacaoSubject;
 import model.notification.INotificacaoObserver;
 import java.util.List;
 
+//Revisar classe!
+
 public abstract class Material implements INotificacaoSubject {
 
 	/// ATRIBUTOS

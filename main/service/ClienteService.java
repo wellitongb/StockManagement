@@ -8,6 +8,8 @@ import exception.ServiceException;
 import model.Cliente;
 import model.Usuario;
 
+//Revisar classe!
+
 public class ClienteService extends UsuarioService{
 
 	ClienteService(){

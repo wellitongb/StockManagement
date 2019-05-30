@@ -4,6 +4,8 @@ import model.Status;
 import model.Usuario;
 import dao.IUsuarioDAO;
 
+//Revisar classe!
+
 public class BloqueioTemporarioUsuario implements IBloqueioUsuarioStrategy {
 
 

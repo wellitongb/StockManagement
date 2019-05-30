@@ -2,7 +2,7 @@ package service;
 
 import java.util.List;
 
-import dao.LivroDAOJDBC;
+import dao.LivroDAOJPA;
 import model.Material;
 import model.Livro;
 import exception.ServiceException;
@@ -10,7 +10,7 @@ import exception.ServiceException;
 public class LivroService extends MaterialService{
 
 	LivroService(){
-		this.materialDAO = new LivroDAOJDBC();
+		this.materialDAO = new LivroDAOJPA();
 	}
 	
 	@Override

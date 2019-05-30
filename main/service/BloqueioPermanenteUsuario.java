@@ -4,6 +4,8 @@ import model.Usuario;
 import dao.IUsuarioDAO;
 import model.StatusSM;
 
+//Revisar classe!
+
 public class BloqueioPermanenteUsuario extends BloqueioUsuario {
 
 

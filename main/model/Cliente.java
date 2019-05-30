@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import exception.ServiceException;
 
+//Revisar classe!
+
 public class Cliente extends Usuario {
 	
 	/// ATRIBUTOS

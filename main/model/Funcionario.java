@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//Revisar classe!
+
 public class Funcionario extends Usuario{
 	 
 	private HashMap<String, ArrayList<Boolean> > hMapRankingUsuario =  new HashMap<>();

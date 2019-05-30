@@ -4,6 +4,8 @@ import model.Material;
 import dao.IMaterialDAO;
 import model.Status;
 
+//Revisar classe!
+
 public class BloqueioTemporarioMaterial implements IBloqueioMaterialStrategy {
 
 	/**

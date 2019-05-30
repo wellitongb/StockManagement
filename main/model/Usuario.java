@@ -8,6 +8,8 @@ import exception.ServiceException;
 import model.notification.INotificacaoObserver;
 import model.notification.INotificacaoSubject;
 
+//Revisar classe!
+
 public abstract class Usuario implements INotificacaoObserver, INotificacaoSubject {
 
 	public Usuario() {
