@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="main"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry excluding="Model/" kind="src" path="BibliotecaJava"/>
 	<classpathentry kind="lib" path="C:/Users/samuellucas97/Downloads/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="C:/Users/samuellucas97/Downloads/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/samuellucas97/Downloads/hibernate-commons-annotations-4.0.2.Final.jar"/>
