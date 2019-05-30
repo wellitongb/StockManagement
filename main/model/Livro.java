@@ -2,20 +2,34 @@ package model;
 
 import java.util.ArrayList;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 //Revisar classe!
 
+@Entity
+@Table (name = "Livro")
 public class Livro extends Material{
 	
 	/// ATRIBUTO
 	
+	@Column
     private String edicao = "";
-    private int volume = 0;
+	@Column
+	private int volume = 0;
+	@Column
     private String editora = "";
-    private String titulo = "";
+	@Column
+	private String titulo = "";
+	@Column
     private String autor = "";
     private ArrayList<String> assunto;
+	@Column
     private Data dataDeLancamento;
+	@Column
     private int quantidadeDeTotalDeExemplares;
+	@Column
     private int quantidadeDeExemplaresEmprestados;
 	
     public Livro(){
@@ -101,7 +115,6 @@ public class Livro extends Material{
     public void setQuantidadeDeExemplaresEmprestados(int quantidadeDeExemplaresEmprestados) {
         this.quantidadeDeExemplaresEmprestados = quantidadeDeExemplaresEmprestados;
     }
-    
    
     /// METODO
     
