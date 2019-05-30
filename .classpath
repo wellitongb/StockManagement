@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry excluding="Model/" kind="src" path="Framework"/>
+	<classpathentry excluding="Model/" kind="src" path="BibliotecaJava"/>
 	<classpathentry kind="src" path="Framework/Model"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
