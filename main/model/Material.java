@@ -4,22 +4,46 @@ import model.notification.INotificacaoSubject;
 import model.notification.INotificacaoObserver;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 //Revisar classe!
 
+@Entity
+@Inheritance( strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Material implements INotificacaoSubject {
 
 	/// ATRIBUTOS
-
+	
+	@Id
+	@GeneratedValue( strategy = GenerationType.AUTO)
 	private long idMaterial;
-	private static int quantidadeMateriasTotal;
-	private static int quantidadeEspacoTotal;
+	
+	@Column(nullable = true)
 	private int quantidade;
-	private StatusSM status;
+	
+	@Column(nullable = true)
 	private String causa;
+	
+	@Column(nullable = true)
 	private double valorUnitario;
+	
+	@Column
+	@Temporal(TemporalType.DATE)
 	private Data dataEntrada;
+	
 	private List<INotificacaoObserver> observerList;
 	
+	private StatusSM status;
+	private static int quantidadeMateriasTotal;
+	private static int quantidadeEspacoTotal;
 	
 	
 	/// GETTERS E SETTERS

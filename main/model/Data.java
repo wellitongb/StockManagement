@@ -1,7 +1,10 @@
 package model;
 
+import javax.persistence.Embeddable;
+
 import exception.ServiceException;
 
+@Embeddable
 public class Data {
 	
     private String dia;

@@ -2,16 +2,27 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import exception.ServiceException;
 
 //Revisar classe!
 
+@Entity
+@Table(name = "Cliente")
 public class Cliente extends Usuario {
 	
 	/// ATRIBUTOS
 	
+	@Column(nullable = true)
 	private int numeroEmprestimos = 0;
+	
+	@Column(nullable = true)
 	private int numeroDevolucoes = 0;
+	
 	private HashMap<String,String>  hMapId_DataDeEmprestimoLivros = new HashMap<>();    
     private HashMap<String, ArrayList<Boolean> > hMapId_RankingLivros = new HashMap<>(); 
     private ArrayList<Livro> livrosAlugados = new ArrayList<>();

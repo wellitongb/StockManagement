@@ -3,14 +3,17 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
     version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="crudHibernatePU" transaction-type="RESOURCE_LOCAL">
+        <!-- Implementacao do JPA -->
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+            <!-- Propriedades JDBC -->
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/biblioteca" />
             <property name="javax.persistence.jdbc.user" value="postgres" />
             <property name="javax.persistence.jdbc.password" value="sandan123" />
-              
+            
+            <!-- Configuracoes especificas do Hibernate -->    
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="false" />
             <property name="hibernate.use_sql_comments" value="false" />

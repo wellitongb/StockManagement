@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 //Revisar classe!
 
@@ -14,24 +16,33 @@ public class Livro extends Material{
 	
 	/// ATRIBUTO
 	
-	@Column
+	@Column(nullable = true)
     private String edicao = "";
-	@Column
-	private int volume = 0;
-	@Column
+	
+	@Column(nullable = true)
+    private int volume = 0;
+	
+	@Column(nullable = true)
     private String editora = "";
-	@Column
-	private String titulo = "";
-	@Column
+	
+	@Column(nullable = false)
+    private String titulo = "";
+	
+	@Column(nullable = false)
     private String autor = "";
-    private ArrayList<String> assunto;
-	@Column
-    private Data dataDeLancamento;
-	@Column
+    
+	@Column(nullable = true)
+    @Temporal(TemporalType.DATE)
+	private Data dataDeLancamento;
+    
+	@Column(nullable = true)
     private int quantidadeDeTotalDeExemplares;
-	@Column
+    
+	@Column(nullable = true)
     private int quantidadeDeExemplaresEmprestados;
 	
+	private ArrayList<String> assunto;
+    
     public Livro(){
     	super();
     }

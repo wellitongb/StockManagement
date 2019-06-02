@@ -1,12 +1,13 @@
 package dao;
   
+import java.util.ArrayList;
 import java.util.List;
   
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import exception.ServiceException;
+import exception.DAOException;
 import model.Cliente;
 import model.Usuario;
 
@@ -39,35 +40,24 @@ public class ClienteDAOJPA implements IUsuarioDAO {
     
     	 return instance;
      }
-  
-     public Cliente getById(final int id) {
-         return entityManager.find(Cliente.class, id);
-     }	
-            
- 
-     @SuppressWarnings("unchecked")
-     public List<Cliente> findAll() {
-    	 return entityManager.createQuery("FROM " + Cliente.class.getName()).getResultList();
-     }
-      
-     
-     public void persist(Cliente cliente) throws ServiceException {
+       
+     public void persist(Cliente cliente) throws DAOException {
     	 try {
     		 entityManager.getTransaction().begin();
 	         entityManager.persist(cliente);
 	         entityManager.getTransaction().commit();
     	 } catch (Exception ex) {
 	            entityManager.getTransaction().rollback();
-	            throw new ServiceException( ex.getMessage() );
+	            throw new DAOException( ex.getMessage() );
     	 }
      }
     
     @Override
- 	public void adicionar(Usuario usuario) throws ServiceException {
+ 	public void adicionar(Usuario usuario) throws DAOException {
  		persist( (Cliente) usuario );
  	}
 
-     public void merge(Cliente cliente) throws ServiceException {
+     public void merge(Cliente cliente) throws DAOException {
      
     	 try {
     		 entityManager.getTransaction().begin();
@@ -75,11 +65,16 @@ public class ClienteDAOJPA implements IUsuarioDAO {
              entityManager.getTransaction().commit();
          } catch (Exception ex) {
              entityManager.getTransaction().rollback();
-	         throw new ServiceException( ex.getMessage() );
+	         throw new DAOException( ex.getMessage() );
          }
      }
-  
-     public void remove(Cliente cliente) throws ServiceException {
+
+     @Override
+     public void alterar(Usuario usuarioAlterado) throws DAOException {
+    	 merge( (Cliente) usuarioAlterado);	
+     }
+     
+     public void remove(Cliente cliente) throws DAOException {
     	 try {
     		 entityManager.getTransaction().begin();
              cliente = entityManager.find(Cliente.class, cliente.getIdUsuario() );
@@ -87,44 +82,60 @@ public class ClienteDAOJPA implements IUsuarioDAO {
              entityManager.getTransaction().commit();
           } catch (Exception ex) {
             entityManager.getTransaction().rollback();
-            throw new ServiceException( ex.getMessage() );
+            throw new DAOException( ex.getMessage() );
           }
       }
   
      @Override
-     public void remover(Usuario usuario) throws ServiceException {
+     public void remover(Usuario usuario) throws DAOException {
     	 remove( (Cliente) usuario );
  	}
      
-     public void removeById(final int id) throws ServiceException {
+     public void removeById(String login) throws DAOException {
           try {
-             Cliente cliente = getById(id);
+             Cliente cliente = getById(login);
              remove(cliente);
           } catch (Exception ex) {
-        	  throw new ServiceException( ex.getMessage() );
+        	  throw new DAOException( ex.getMessage() );
           }
      }
-
 	
-	@Override
-	public void alterar(Usuario usuarioAlterado) throws ServiceException {
-		// TODO Auto-generated method stub
+     private Cliente getById( String login) {
+         return entityManager.find(Cliente.class, login);
+     }
+
+     @Override
+     public Usuario consultar(String login) throws DAOException {
+
+		Usuario cliente = getById( login );
 		
-	}
+		if( cliente == null )
+			throw new DAOException("Funcionario nao encontrado");
+		
+		return cliente;
+		
+     }
 
-	
-
-	@Override
-	public Usuario consultar(String login) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Usuario> consultarTodos() throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+     @SuppressWarnings("unchecked")
+     public List<Cliente> findAll() {
+    	 return entityManager.createQuery("FROM " + Cliente.class.getName()).getResultList();
+     }
+      
+     @Override
+     public List<Usuario> consultarTodos() throws DAOException {
+    	 
+    	 List<Cliente> clientes = findAll();
+    	 ArrayList<Usuario> usuarios = new ArrayList<Usuario>(); 
+		
+    	 if( clientes == null )
+    		 throw new DAOException("Funcionario nao encontrado");
+		
+    	 for( Cliente i : clientes) {
+    		 usuarios.add(i);
+    	 }
+		
+    	 return usuarios;
+     }
   
 }
 	

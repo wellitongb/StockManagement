@@ -1,6 +1,19 @@
 package model;
 
 import java.util.Queue;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import java.util.List;
 
 import exception.ServiceException;
@@ -10,25 +23,46 @@ import model.notification.INotificacaoSubject;
 
 //Revisar classe!
 
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Usuario implements INotificacaoObserver, INotificacaoSubject {
-
-	public Usuario() {
-		
-	}
 	
 	/// ATRIBUTOS
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(nullable = false, unique = true)
 	private long idUsuario;
+	
+	@Column(nullable = false)
 	private String nome;
+	
+	@Column(nullable = false, unique = true)
 	private String login;
+	
+	@Column(nullable = false)
 	private String senha;
+	
+	@Enumerated(EnumType.STRING)
 	private StatusSM status;
+	
+	@Column(nullable = false)
 	private int quantidadeDeMovimentacoes;
+	
+	@Column(nullable = true)
 	private String causa;
+	
+	@OneToMany
 	private List<INotificacaoObserver> observerList;
+	
+	@OneToMany
 	private Queue<String> notificacoes;
+	
+	@Column(nullable = true)
 	private int quantidadeTentativasIncorretasDeAcesso;
 	
+	public Usuario() {	
+	}
 	/// GETTERS E SETTERS
 	
 	public long getIdUsuario() {
