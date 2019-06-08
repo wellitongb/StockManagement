@@ -1,7 +1,8 @@
 package service;
 
+import service.validacao.ValidacaoMaterial;
 import exception.ServiceException;
-import model.Livro;
+import model.tiposMaterial.Livro;
 import model.Material;
 
 public class ValidacaoVolume implements ValidacaoMaterial{
@@ -16,7 +17,7 @@ public class ValidacaoVolume implements ValidacaoMaterial{
 			throw new ServiceException("Parametro invalido!");
 		
 		if(Integer.parseInt(key) > 0 ) 
-            throw new ServiceException("Quantidade de volume inválida!");
+            throw new ServiceException("Quantidade de volume invï¿½lida!");
 		
 		return "OK";
 	}

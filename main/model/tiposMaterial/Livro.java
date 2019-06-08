@@ -1,54 +1,65 @@
-package model;
+package model.tiposMaterial;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/// CLASSES PRÓPRIAS
+import model.Data;
+import model.Material;
+
 //Revisar classe!
 
+/**
+ * Representa um livro
+ * @see Material
+ */
 @Entity
 @Table (name = "Livro")
-public class Livro extends Material{
+public class Livro extends Material implements Serializable{
 	
-	/// ATRIBUTO
-	
-	@Column(nullable = true)
+    /// ATRIBUTOS ********************************************************************************
+    
+    @Column(nullable = true)
     private String edicao = "";
 	
-	@Column(nullable = true)
+    @Column(nullable = true)
     private int volume = 0;
 	
-	@Column(nullable = true)
+    @Column(nullable = true)
     private String editora = "";
 	
-	@Column(nullable = false)
+    @Column(nullable = false)
     private String titulo = "";
 	
-	@Column(nullable = false)
+    @Column(nullable = false)
     private String autor = "";
     
-	@Column(nullable = true)
+    @Column(nullable = true)
     @Temporal(TemporalType.DATE)
-	private Data dataDeLancamento;
+    private Data dataDeLancamento;
     
-	@Column(nullable = true)
+    @Column(nullable = true)
     private int quantidadeDeTotalDeExemplares;
     
-	@Column(nullable = true)
+    @Column(nullable = true)
     private int quantidadeDeExemplaresEmprestados;
 	
-	private ArrayList<String> assunto;
+    @OneToMany    
+    private ArrayList<String> assunto;
     
-    public Livro(){
-    	super();
-    }
+    /// CONSTRUTOR *******************************************************************************
     
-    /// GETTERS E SETTERS
+    public Livro(){ /** vazio **/ }
     
+    /// GETTERS E SETTERS ************************************************************************
+       
     public String getEdicao() {
         return this.edicao;
     }
@@ -127,23 +138,50 @@ public class Livro extends Material{
         this.quantidadeDeExemplaresEmprestados = quantidadeDeExemplaresEmprestados;
     }
    
-    /// METODO
-    
+    /// MÉTODOS **********************************************************************************
+        
     @Override
-	protected String ImplementYourToString() {
-    	String myObjectInString = "";
+    protected String ImplementYourToString() {
+        String myObjectInString = "";
 		
-		myObjectInString+= " " + this.autor;
-		myObjectInString+= " " + this.edicao;
-		myObjectInString+= " " + this.editora;
-		myObjectInString+= " " + String.valueOf(this.quantidadeDeExemplaresEmprestados);
-		myObjectInString+= " " + String.valueOf(this.quantidadeDeTotalDeExemplares);
-		myObjectInString+= " " + this.titulo;
-		myObjectInString+= " " + String.valueOf(this.volume);
-		myObjectInString+= " " + this.assunto.toString();
-		myObjectInString+= " " + this.dataDeLancamento.toString();
-		
-		return myObjectInString;
-	}
+        myObjectInString+= " " + this.autor;
+        myObjectInString+= " " + this.edicao;
+        myObjectInString+= " " + this.editora;
+        myObjectInString+= " " + String.valueOf(this.quantidadeDeExemplaresEmprestados);
+        myObjectInString+= " " + String.valueOf(this.quantidadeDeTotalDeExemplares);
+        myObjectInString+= " " + this.titulo;
+        myObjectInString+= " " + String.valueOf(this.volume);
+        myObjectInString+= " " + this.assunto.toString();
+        myObjectInString+= " " + this.dataDeLancamento.toString();
+
+        return myObjectInString;
+    }
 	
+        
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += ( id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Livro)) {
+            return false;
+        }
+        Livro other = (Livro) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "model.Livro[ id=" + id + " ]";
+    }
+    
+    
 }

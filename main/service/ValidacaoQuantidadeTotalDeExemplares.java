@@ -1,7 +1,8 @@
 package service;
 
+import service.validacao.ValidacaoMaterial;
 import model.Material;
-import model.Livro;
+import model.tiposMaterial.Livro;
 import exception.ServiceException;
 
 public class ValidacaoQuantidadeTotalDeExemplares implements ValidacaoMaterial {
@@ -18,7 +19,7 @@ public class ValidacaoQuantidadeTotalDeExemplares implements ValidacaoMaterial {
 			throw new ServiceException("Parametro invalido!");
 			
 		if( Integer.parseInt(key) < livro.getQuantidadeDeExemplaresEmprestados() ) 
-	            throw new ServiceException("Quantidade inválida de exemplares!");
+	            throw new ServiceException("Quantidade invï¿½lida de exemplares!");
 	     
 		return "OK";
 	}

@@ -1,7 +1,8 @@
 package service;
 
+import service.validacao.ValidacaoMaterial;
 import exception.ServiceException;
-import model.Livro;
+import model.tiposMaterial.Livro;
 import model.Material;
 
 public class ValidacaoQuantidadeDeExemplaresEmprestados implements ValidacaoMaterial{
@@ -19,7 +20,7 @@ public class ValidacaoQuantidadeDeExemplaresEmprestados implements ValidacaoMate
 			
 		if( Integer.parseInt(key) < 0 && 
 				 Integer.parseInt(key) > livro.getQuantidadeDeTotalDeExemplares() ) 
-			throw new ServiceException("Quantidade inválida de exemplares emprestados!");
+			throw new ServiceException("Quantidade invï¿½lida de exemplares emprestados!");
 	     
 		return "OK";
 

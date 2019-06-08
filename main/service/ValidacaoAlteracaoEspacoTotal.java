@@ -1,5 +1,6 @@
 package service;
 
+import service.validacao.ValidacaoMaterial;
 import exception.ServiceException;
 import model.Material;
 
@@ -13,7 +14,7 @@ public class ValidacaoAlteracaoEspacoTotal implements ValidacaoMaterial {
 			throw new ServiceException("Parametro invalido!");
 			
 		if( Integer.parseInt(key) < material.getQuantidadeMateriasTotal() ) 
-	            throw new ServiceException("Quantidade inválida de espaco!");
+	            throw new ServiceException("Quantidade invï¿½lida de espaco!");
 	     
 		return "OK";
 	}

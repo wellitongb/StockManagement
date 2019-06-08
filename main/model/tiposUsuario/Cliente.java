@@ -1,4 +1,4 @@
-package model;
+package model.tiposUsuario;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,45 +7,61 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/// CLASSES PRÃ“PRIAS
+import model.tiposMaterial.Livro;
 import exception.ServiceException;
+import java.io.Serializable;
+import javax.persistence.OneToMany;
+import model.Usuario;
 
 //Revisar classe!
 
+/**
+ * Representa um cliente
+ * @see Usuario
+ */
 @Entity
 @Table(name = "Cliente")
-public class Cliente extends Usuario {
+public class Cliente extends Usuario implements Serializable {
 	
-	/// ATRIBUTOS
-	
-	@Column(nullable = true)
-	private int numeroEmprestimos = 0;
-	
-	@Column(nullable = true)
-	private int numeroDevolucoes = 0;
-	
-	private HashMap<String,String>  hMapId_DataDeEmprestimoLivros = new HashMap<>();    
-    private HashMap<String, ArrayList<Boolean> > hMapId_RankingLivros = new HashMap<>(); 
-    private ArrayList<Livro> livrosAlugados = new ArrayList<>();
-    private ArrayList<Boolean> rankingCliente = new ArrayList<>();
-	
-    /// CONSTRUTORES 
+    /// ATRIBUTOS ********************************************************************************
     
-    public Cliente(){
-    	
-    	super();
-    	
+    @Column(nullable = true)
+    private int numeroEmprestimos = 0;
+
+    @Column(nullable = true)
+    private int numeroDevolucoes = 0;
+
+    @OneToMany    
+    private HashMap<String,String>  hMapId_DataDeEmprestimoLivros = new HashMap<>();    
+    
+    @OneToMany    
+    private HashMap<String, ArrayList<Boolean> > hMapId_RankingLivros = new HashMap<>(); 
+    
+    @OneToMany    
+    private ArrayList<Livro> livrosAlugados = new ArrayList<>();
+    
+    @OneToMany    
+    private ArrayList<Boolean> rankingCliente = new ArrayList<>();
+
+    /// CONSTRUTOR *******************************************************************************
+    
+    public Cliente(){ 
+        super(); 
     }
     
-    /// GETTERS E SETTERS
-    
+    /// GETTERS E SETTERS ************************************************************************
+            
     public ArrayList<Boolean> getRankingCliente(){
         return this.rankingCliente;
     }
 
     public int getRankingInt(){
         int cont = 0;
-        for(boolean nivel : this.getRankingCliente()){
-            if(nivel) cont++;
+        for(boolean nivel : this.getRankingCliente() ){
+            
+            if(nivel) 
+                cont++;
             else break;
         }
         return cont;
@@ -57,7 +73,7 @@ public class Cliente extends Usuario {
     }
     
     public void setRankingClienteInt( int valor) throws ServiceException{        
-        if(valor < 0 || valor >5) throw new ServiceException("Valor do ranking do cliente inválido!");
+        if(valor < 0 || valor >5) throw new ServiceException("Valor do ranking do cliente invï¿½lido!");
         else {
             this.rankingCliente.set(0, false);
             this.rankingCliente.set(1, false);
@@ -103,7 +119,7 @@ public class Cliente extends Usuario {
     }
 
     public void setNumeroDevolucoes(int numeroDevolucoes) throws ServiceException {
-        if(livrosAlugados.size() > numeroDevolucoes) throw new ServiceException("Valor de numero de devoluções invalido!");
+        if(livrosAlugados.size() > numeroDevolucoes) throw new ServiceException("Valor de numero de devoluï¿½ï¿½es invalido!");
         this.numeroDevolucoes = numeroDevolucoes;
     }
     
@@ -116,19 +132,47 @@ public class Cliente extends Usuario {
         this.livrosAlugados = livrosAlugados;
     }
 
-    /// METODOS
-    
-	@Override
-	protected String ImplementYourToString() {		
-		String myObjectInString = "";
-		
-		myObjectInString+= " " +  this.getHMapId_DataDeEmprestimoLivros().toString();
-		myObjectInString+= " " + this.getHMapId_RankingLivros();
-		myObjectInString+= " " + this.getLivrosAlugados();
-		myObjectInString+= " " + String.valueOf(this.numeroDevolucoes);
-		myObjectInString+= " " + String.valueOf(this.numeroEmprestimos);
-		myObjectInString+= " " + this.rankingCliente.toString();
-		
-		return myObjectInString;
-	} 
+    /// MÃ‰TODOS **********************************************************************************
+        
+    @Override
+    protected String ImplementYourToString() {		
+        String myObjectInString = "";
+
+        myObjectInString+= " " +  this.getHMapId_DataDeEmprestimoLivros().toString();
+        myObjectInString+= " " + this.getHMapId_RankingLivros();
+        myObjectInString+= " " + this.getLivrosAlugados();
+        myObjectInString+= " " + String.valueOf(this.numeroDevolucoes);
+        myObjectInString+= " " + String.valueOf(this.numeroEmprestimos);
+        myObjectInString+= " " + this.rankingCliente.toString();
+
+        return myObjectInString;
+    } 
+        
+        
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += ( id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Cliente)) {
+            return false;
+        }
+        Cliente other = (Cliente) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "model.Cliente[ id=" + id + " ]";
+    }
+
+        
 }

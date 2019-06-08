@@ -1,7 +1,8 @@
 package service;
 
+import service.validacao.ValidacaoUsuario;
 import exception.ServiceException;
-import model.Cliente;
+import model.tiposUsuario.Cliente;
 import model.Usuario;
 
 public class ValidacaoRankingCliente implements ValidacaoUsuario{
@@ -16,7 +17,7 @@ public class ValidacaoRankingCliente implements ValidacaoUsuario{
 			throw new ServiceException("Parametro invalido!");
 			
 		if(Integer.parseInt(key) < 0 || Integer.parseInt(key) > 5 ) 
-	            throw new ServiceException("Valor do ranking do cliente inválido!");
+	            throw new ServiceException("Valor do ranking do cliente invï¿½lido!");
 	     
 		return "OK";
 	}

@@ -1,10 +1,11 @@
 package service;
 
+import service.validacao.ValidacaoMaterial;
 import java.util.List;
 
 import dao.LivroDAOJPA;
 import model.Material;
-import model.Livro;
+import model.tiposMaterial.Livro;
 import exception.ServiceException;
 
 public class LivroService extends MaterialService{

@@ -1,7 +1,8 @@
 package service;
 
+import service.validacao.ValidacaoUsuario;
 import exception.ServiceException;
-import model.Cliente;
+import model.tiposUsuario.Cliente;
 import model.Usuario;
 
 public class ValidacaoNumeroDevolucoes implements ValidacaoUsuario{
@@ -17,7 +18,7 @@ public class ValidacaoNumeroDevolucoes implements ValidacaoUsuario{
 			throw new ServiceException("Parametro invalido!");
 			
 		if(Integer.parseInt(key) < cliente.getLivrosAlugados().size()) 
-	            throw new ServiceException("Valor de numero de devoluções invalido!");
+	            throw new ServiceException("Valor de numero de devoluï¿½ï¿½es invalido!");
 	     
 		return "OK";
 	}

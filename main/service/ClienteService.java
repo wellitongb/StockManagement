@@ -1,11 +1,12 @@
 package service;
 
+import service.validacao.ValidacaoUsuario;
 import java.util.List;
 
 import dao.ClienteDAOJDBC;
 import dao.ClienteDAOJDBC;
 import exception.ServiceException;
-import model.Cliente;
+import model.tiposUsuario.Cliente;
 import model.Usuario;
 
 //Revisar classe!

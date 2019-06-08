@@ -1,7 +1,8 @@
 package service;
 
+import service.validacao.ValidacaoUsuario;
 import exception.ServiceException;
-import model.Funcionario;
+import model.tiposUsuario.Funcionario;
 import model.Usuario;
 
 public class ValidacaoSalario implements ValidacaoUsuario{
@@ -15,7 +16,7 @@ public class ValidacaoSalario implements ValidacaoUsuario{
 			throw new ServiceException("Parametro invalido!");
 			
 		if( !(Integer.parseInt(key) >= 0)) 
-	            throw new ServiceException("Quantidade inválida de salario!");
+	            throw new ServiceException("Quantidade invï¿½lida de salario!");
 	     
 		return "OK";
 	}

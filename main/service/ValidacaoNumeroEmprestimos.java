@@ -1,7 +1,8 @@
 package service;
 
+import service.validacao.ValidacaoUsuario;
 import exception.ServiceException;
-import model.Cliente;
+import model.tiposUsuario.Cliente;
 import model.Usuario;
 
 public class ValidacaoNumeroEmprestimos implements ValidacaoUsuario{

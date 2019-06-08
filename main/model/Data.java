@@ -3,15 +3,20 @@ package model;
 import javax.persistence.Embeddable;
 
 import exception.ServiceException;
+import java.io.Serializable;
 
 @Embeddable
-public class Data {
-	
+public class Data implements Serializable {
+    
+    /// ATRIBUTOS ********************************************************************************
+    
     private String dia;
     private String mes;
     private String ano;
     private String data; /// USADO APENAS INTERNAMENTE
-
+    
+    /// CONSTRUTOR *******************************************************************************
+    
     /**
      * Construtor da classe Data
      * @param data  Data em formato de string a ser armazenada
@@ -54,7 +59,9 @@ public class Data {
         this.ano = anoTemporario;
         this.data = data;
     }
-
+    
+    /// GETTERS E SETTERS ************************************************************************
+    
     public String getDia() {
         return this.dia;
     }
@@ -66,7 +73,9 @@ public class Data {
     public String getAno() {
         return this.ano;
     }
-
+    
+    /// MÃ‰TODOS **********************************************************************************
+    
     public void set(int dia, int mes, int ano) {
     	this.dia = String.valueOf(dia);
     	this.mes = String.valueOf(mes);
@@ -74,11 +83,15 @@ public class Data {
     	
     }
     /**
-     * Envia a string que contém a data
+     * Envia a string que contï¿½m a data
      * @return  A data em formato de string
      */
     @Override
     public String toString(){
         return this.data;
+    }
+
+    public int compareTo(Data dataEntrada) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

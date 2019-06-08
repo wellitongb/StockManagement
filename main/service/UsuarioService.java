@@ -1,5 +1,6 @@
 package service;
 
+import service.validacao.ValidacaoUsuario;
 import model.Usuario;
 import dao.IUsuarioDAO;
 

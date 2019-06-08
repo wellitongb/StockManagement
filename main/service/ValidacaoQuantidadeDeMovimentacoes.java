@@ -1,5 +1,6 @@
 package service;
 
+import service.validacao.ValidacaoUsuario;
 import exception.ServiceException;
 import model.Usuario;
 
@@ -11,7 +12,7 @@ public class ValidacaoQuantidadeDeMovimentacoes implements ValidacaoUsuario{
 			throw new ServiceException("Parametro invalido!");
 		
 		if( Integer.parseInt(key) < 0 ) 
-			throw new ServiceException("Quantidade de movimentações invalida!");
+			throw new ServiceException("Quantidade de movimentaï¿½ï¿½es invalida!");
 		
 		return "OK";
 	}
