@@ -1,4 +1,4 @@
-package service;
+package service.raqueamento;
 
 import java.util.List;
 import model.Material;

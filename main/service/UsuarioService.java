@@ -1,5 +1,6 @@
 package service;
 
+import service.raqueamento.IRankingUsuarioStrategy;
 import service.validacao.ValidacaoUsuario;
 import model.Usuario;
 import dao.IUsuarioDAO;

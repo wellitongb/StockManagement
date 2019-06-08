@@ -44,7 +44,7 @@ public class ValidacaoUsuario {
             }
             
             
-            if(usuario.getIdUsuario() < 0){
+            if(usuario.getId() < 0){
                 throw new ServiceException("Usuario criado com ID errado!");
             }
             

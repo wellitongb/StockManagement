@@ -1,5 +1,6 @@
 package service;
 
+import service.raqueamento.IRankingMaterialStrategy;
 import service.validacao.ValidacaoMaterial;
 import model.Material;
 import dao.IMaterialDAO;

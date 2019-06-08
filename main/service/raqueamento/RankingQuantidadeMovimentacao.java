@@ -1,4 +1,4 @@
-package service;
+package service.raqueamento;
 
 import model.Usuario;
 import java.util.Collections;
