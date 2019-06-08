@@ -6,11 +6,11 @@
 package exception;
 
 /**
- * Representa uma exceção da camada serviço
+ * Representa uma exceção da camada control
  * @see Exception
  */
-public class ServiceException extends Exception{
-    public ServiceException(String mensagem){
+public class ControlException extends Exception{
+    public ControlException(String mensagem){
         super( mensagem );
     }
 }

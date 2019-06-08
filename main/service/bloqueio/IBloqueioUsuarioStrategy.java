@@ -1,4 +1,4 @@
-package service;
+package service.bloqueio;
 
 import model.Usuario;
 import dao.IUsuarioDAO;
