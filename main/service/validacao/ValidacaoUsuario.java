@@ -4,6 +4,7 @@ import exception.ServiceException;
 import java.util.List;
 import model.StatusSM;
 import model.Usuario;
+import model.notification.INotificacaoObserver;
 
 /**
  * 
@@ -12,11 +13,13 @@ import model.Usuario;
 public class ValidacaoUsuario {
 
     /**
-     *
-     * @param usuario
-     * @param usuarios
-     * @return 
-     * @throws ServiceException
+     * Método responsável por válidar todos os atributos da classe usuário!
+     * @param usuario Usuário que irá passar pela validação.  
+     * @param usuarios Lista de usuários do sistema que irão ser utilizados na
+     * checagem de informações do usuario verificado.
+     * @return Retorna uma String que representa a situação da validação. 
+     * @throws ServiceException Dá suporte a indicação de problemas relacionados
+     * a validação.
      */
     public String validacao(Usuario usuario, List<Usuario> usuarios) throws ServiceException{
             
@@ -73,28 +76,31 @@ public class ValidacaoUsuario {
                 }
             }
             
-            usuario.getObserverList();
-            
-            
-            
-            
-            
+            if(usuario.getObserverList()!= null &&
+               !usuario.getObserverList().isEmpty()){
+                for(INotificacaoObserver usuarioObserver : usuario.getObserverList()){
+                    if(usuarioObserver == null)
+                        throw new 
+                        ServiceException("Usuario possui status ou causa indevida!");
+                }
+            }
+                        
             return "OK";
         }
         
-        private void verificacaoCaracterLogin(String palavra, List<Usuario> usuarios) throws ServiceException{
-         
-            if(!palavra.matches("[a-zA-Z[0-9]]")){
+    private void verificacaoCaracterLogin(String palavra, List<Usuario> usuarios) throws ServiceException{
+
+        if(!palavra.matches("[a-zA-Z[0-9]]")){
+            throw new 
+            ServiceException("Login inválido!");
+        }
+
+        for (Usuario usuario : usuarios) {
+            if(palavra.matches(usuario.getLogin()))
                 throw new 
                 ServiceException("Login inválido!");
-            }
-            
-            for (Usuario usuario : usuarios) {
-                if(palavra.matches(usuario.getLogin()))
-                    throw new 
-                    ServiceException("Login inválido!");
-            }
-            
         }
+
+    }
         
 }
