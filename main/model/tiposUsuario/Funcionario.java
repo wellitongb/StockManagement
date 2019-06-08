@@ -1,8 +1,6 @@
 package model.tiposUsuario;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,8 +29,6 @@ public class Funcionario extends Usuario implements Serializable {
     @Enumerated(EnumType.STRING)
     private StatusFuncionario statusFuncionario;
 
-    private HashMap<String, ArrayList<Boolean> > hMapRankingUsuario =  new HashMap<>();
-
    
     /// CONSTRUTOR *******************************************************************************
     
@@ -58,14 +54,6 @@ public class Funcionario extends Usuario implements Serializable {
         this.statusFuncionario = statusFuncionario;
     }
 
-    public void setHMapRankingUsuario(HashMap<String, ArrayList<Boolean> > hMapRankingUsuario){
-        this.hMapRankingUsuario = hMapRankingUsuario;
-    }
-    
-    public HashMap<String, ArrayList<Boolean> > getHMapRankingUsuario(){
-        return this.hMapRankingUsuario;
-    }
-    
     /// MÉTODOS **********************************************************************************
     
     @Override
@@ -73,7 +61,6 @@ public class Funcionario extends Usuario implements Serializable {
         String myObjectInString = "";
 
         myObjectInString+= " " +  String.valueOf(this.salario);
-        myObjectInString+= " " + this.hMapRankingUsuario.toString();
 
         return myObjectInString;
     }
