@@ -9,10 +9,11 @@ public class ValidacaoMaterial {
 	/// MÉTODOS
 
     /**
-     *
-     * @param material
-     * @return
-     * @throws ServiceException
+     * Método responsável por válidar todos os atributos da classe material!
+     * @param material material que irá passar pela validação.  
+     * @return Retorna uma String que representa a situação da validação. 
+     * @throws ServiceException Dá suporte a indicação de problemas relacionados
+     * a validação.
      */
     public String validacao(Material material) throws ServiceException{
 
