@@ -125,7 +125,11 @@ public abstract class Material implements Serializable {
     public Data getDataEntrada(){		
         return dataEntrada;
     }
-
+    
+    public void setDataEntrada(Data dataEntrada) {		
+        this.dataEntrada = dataEntrada;
+    }
+    
     public void setDataEntrada(int dia, int mes, int ano) {		
         this.dataEntrada.set(dia,mes,ano);
     }

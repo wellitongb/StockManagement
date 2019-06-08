@@ -10,7 +10,7 @@ import model.notification.INotificacaoObserver;
  * 
  * @author wellitongb
  */
-public class ValidacaoUsuario {
+public abstract class ValidacaoUsuario {
 
     /**
      * Método responsável por válidar todos os atributos da classe usuário!
@@ -32,7 +32,8 @@ public class ValidacaoUsuario {
                 ServiceException("Senha inválida!");
             }
                         
-            if(3 <= usuario.getSenha().length() &&
+            if(3 <= usuario.getNome().length() &&
+                    usuario.getNome().substring(0, 1).matches("[ \\t\\n\\x0B\\f\\r]") &&
                     !usuario.getNome().matches("[a-zA-Z[0-9][ \\t\\n\\x0B\\f\\r]]")){
                 throw new 
                 ServiceException("Nome inválido!");
@@ -85,6 +86,8 @@ public class ValidacaoUsuario {
                 }
             }
                         
+            validacaoImplementacao(usuario);
+            
             return "OK";
         }
         
@@ -102,5 +105,13 @@ public class ValidacaoUsuario {
         }
 
     }
-        
+    
+    /**
+     * Método responsável por validar todos os atributos da classe especilizada
+     * de usuário!
+     * @param usuario Usuário que irá passar pela validação.
+     * @throws ServiceException Dá suporte a indicação de problemas relacionados
+     * a validação.
+     */
+    protected abstract void validacaoImplementacao(Usuario usuario) throws ServiceException;
 }

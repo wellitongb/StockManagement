@@ -4,7 +4,7 @@ import model.Material;
 import exception.ServiceException;
 import model.StatusSM;
 
-public class ValidacaoMaterial {
+public abstract class ValidacaoMaterial {
 
 	/// MÉTODOS
 
@@ -31,9 +31,9 @@ public class ValidacaoMaterial {
 
         }
 
-        if(material.getDataEntrada() == null){
-         throw new ServiceException("Material criado sem data de entrada!");
-        }
+//        if(material.getDataEntrada() == null){
+//         throw new ServiceException("Material criado sem data de entrada!");
+//        }
 
         if(material.getQuantidade() < 0){
             throw new 
@@ -45,7 +45,17 @@ public class ValidacaoMaterial {
             ServiceException("Material criado com valor unitário inválido!");
         }
 
+        validacaoImplementacao(material);
+        
         return "OK";
     }
 
+    /**
+     * Método responsável por validar todos os atributos da classe especilizada
+     * de material!
+     * @param material Material que irá passar pela validação.
+     * @throws ServiceException Dá suporte a indicação de problemas relacionados
+     * a validação.
+     */
+    protected abstract void validacaoImplementacao(Material material) throws ServiceException;
 }

@@ -2,6 +2,7 @@ package model.tiposMaterial;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,8 +24,12 @@ import model.Material;
 @Entity
 @Table (name = "Livro")
 public class Livro extends Material implements Serializable{
-	
-    /// ATRIBUTOS ********************************************************************************
+    
+   
+    
+/// ATRIBUTOS ********************************************************************************
+    
+    public final String tiposDeAssuntos[];
     
     @Column(nullable = true)
     private String edicao = "";
@@ -56,7 +61,11 @@ public class Livro extends Material implements Serializable{
     
     /// CONSTRUTOR *******************************************************************************
     
-    public Livro(){ /** vazio **/ }
+    public Livro(){
+        this.tiposDeAssuntos = new String[]{"Ficção", "Comédia", "Drama", "Apolalipse Zumbi", 
+            "Horror", "Terror", "Poesia", "Conto", "Biográfia", "AutoBiográfia", 
+            "Suspense", "Paródia", "Tragédia"};
+    }
     
     /// GETTERS E SETTERS ************************************************************************
        
