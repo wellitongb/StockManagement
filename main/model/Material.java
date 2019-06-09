@@ -154,7 +154,7 @@ public abstract class Material implements Serializable {
     public String toString(){
         String myObjectInString = "";
 
-        myObjectInString+= this.causa.toString();
+        myObjectInString+= this.causa;
         myObjectInString+= this.dataEntrada.toString();
         myObjectInString+= String.valueOf(this.id);
         myObjectInString+= this.observerList.toString();
@@ -169,23 +169,19 @@ public abstract class Material implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+        return implementYourHashCode();
     }
+    
+    protected abstract int implementYourHashCode();
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Material)) {
             return false;
         }
-        Material other = (Material) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return implementYourEquals(object);
     }
-
+    
+    protected abstract boolean implementYourEquals(Object object);
     
 }

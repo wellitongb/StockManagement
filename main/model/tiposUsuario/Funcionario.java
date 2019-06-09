@@ -60,34 +60,40 @@ public class Funcionario extends Usuario implements Serializable {
     protected String ImplementYourToString() {
         String myObjectInString = "";
 
+        myObjectInString+= " " +  this.statusFuncionario.toString();
         myObjectInString+= " " +  String.valueOf(this.salario);
 
         return myObjectInString;
     }
 
     @Override
-    public int hashCode() {
+    protected int implementYourHashCode() {
         int hash = 0;
-        hash += ( id != null ? id.hashCode() : 0);
+        hash += ( this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
+    protected boolean implementYourEquals(Object object) {
+        if (!(object instanceof Funcionario)) {
             return false;
         }
-        Cliente other = (Cliente) object;
-        if ((this.id == null && other.getId() != null) || (this.id != null && !this.id.equals(other.getId()))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "model.Cliente[ id=" + id + " ]";
+        Funcionario other = (Funcionario) object;
+                
+        return !((this.id == null && other.id != null) || 
+                (!this.causa.equals(other.causa)) ||
+                (!this.login.equals(other.login)) ||
+                (!this.nome.equals(other.nome)) ||
+                (!this.notificacoes.equals(other.notificacoes)) ||
+                (!this.observerList.equals(other.observerList)) ||
+                (this.quantidadeDeMovimentacoes != other.quantidadeDeMovimentacoes) ||
+                (this.quantidadeTentativasIncorretasDeAcesso != other.quantidadeTentativasIncorretasDeAcesso) ||
+                (!this.senha.equals(other.senha)) ||
+                (!this.status.equals(other.status)) ||
+                (!this.id.equals(other.id)) ||
+                (this.salario != other.salario) ||
+                (!this.statusFuncionario.equals(other.statusFuncionario))
+                );
     }
 
 }

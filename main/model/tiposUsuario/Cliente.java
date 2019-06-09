@@ -166,44 +166,38 @@ public class Cliente extends Usuario implements Serializable {
         
         
     @Override
-    public int hashCode() {
+    public int implementYourHashCode() {
         int hash = 0;
-        hash += ( id != null ? id.hashCode() : 0);
+        hash += ( this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean implementYourEquals(Object object) {
         if (!(object instanceof Cliente)) {
             return false;
         }
         Cliente other = (Cliente) object;
                 
         return !((this.id == null && other.id != null) || 
-                (this.causa.equals(other.causa)) ||
-                (this.login.equals(other.login)) ||
-                (this.nome.equals(other.nome)) ||
-                (this.notificacoes.equals(other.notificacoes)) ||
-                (this.observerList.equals(other.observerList)) ||
+                (!this.causa.equals(other.causa)) ||
+                (!this.login.equals(other.login)) ||
+                (!this.nome.equals(other.nome)) ||
+                (!this.notificacoes.equals(other.notificacoes)) ||
+                (!this.observerList.equals(other.observerList)) ||
                 (this.quantidadeDeMovimentacoes != other.quantidadeDeMovimentacoes) ||
                 (this.quantidadeTentativasIncorretasDeAcesso != other.quantidadeTentativasIncorretasDeAcesso) ||
-                (this.senha.equals(other.senha)) ||
-                (this.status.equals(other.status)) ||
-                (this.id != null && !this.id.equals(other.id)) ||
+                (!this.senha.equals(other.senha)) ||
+                (!this.status.equals(other.status)) ||
+                (!this.id.equals(other.id)) ||
                 (this.livrosAlugados != other.livrosAlugados) ||
                 (this.numeroDevolucoes != other.numeroDevolucoes) ||
                 (this.numeroEmprestimos != other.numeroEmprestimos) ||
                 (this.numeroLivrosPendentes != other.numeroLivrosPendentes) ||
-                (this.rankingCliente.equals(other.rankingCliente)) ||
-                (this.hMapId_DataDeEmprestimoLivros.equals(other.hMapId_DataDeEmprestimoLivros)) ||
-                (this.hMapId_RankingLivros.equals(other.hMapId_RankingLivros))
+                (!this.rankingCliente.equals(other.rankingCliente)) ||
+                (!this.hMapId_DataDeEmprestimoLivros.equals(other.hMapId_DataDeEmprestimoLivros)) ||
+                (!this.hMapId_RankingLivros.equals(other.hMapId_RankingLivros))
                 );
     }
-
-    @Override
-    public String toString() {
-        return "model.Cliente[ id=" + id + " ]";
-    }
-
         
 }

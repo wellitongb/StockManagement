@@ -168,29 +168,36 @@ public class Livro extends Material implements Serializable{
 	
         
     @Override
-    public int hashCode() {
+    public int implementYourHashCode() {
         int hash = 0;
-        hash += ( id != null ? id.hashCode() : 0);
+        hash += ( this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+    public boolean implementYourEquals(Object object) {
         if (!(object instanceof Livro)) {
             return false;
         }
         Livro other = (Livro) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || 
+                (!this.causa.equals(other.causa)) ||
+                (!this.dataEntrada.equals(other.dataEntrada)) ||
+                (!this.assunto.equals(other.assunto)) ||
+                (!this.observerList.equals(other.observerList)) ||
+                (this.quantidade != other.quantidade) ||
+                (this.quantidadeDeExemplaresEmprestados != other.quantidadeDeExemplaresEmprestados) ||
+                (!this.edicao.equals(other.edicao)) ||
+                (!this.editora.equals(other.editora)) ||
+                (!this.status.equals(other.status)) ||
+                (!this.id.equals(other.id)) ||
+                (this.quantidadeDeTotalDeExemplares != other.quantidadeDeTotalDeExemplares) ||
+                (!this.autor.equals(other.autor)) ||
+                (!this.dataDeLancamento.equals(other.dataDeLancamento)) ||
+                (!this.titulo.equals(other.titulo)) ||
+                (this.valorUnitario != other.valorUnitario) ||
+                (this.volume != other.volume)
+                );
     }
 
-    @Override
-    public String toString() {
-        return "model.Livro[ id=" + id + " ]";
-    }
-    
-    
 }
