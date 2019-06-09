@@ -13,6 +13,7 @@ import exception.ServiceException;
 import java.io.Serializable;
 import javax.persistence.OneToMany;
 import model.Usuario;
+import model.Data;
 
 //Revisar classe!
 
@@ -31,27 +32,42 @@ public class Cliente extends Usuario implements Serializable {
 
     @Column(nullable = true)
     private int numeroDevolucoes = 0;
+    
+    @Column(nullable = true)
+    private int numeroLivrosPendentes = 0;
 
     @OneToMany    
-    private HashMap<String,String>  hMapId_DataDeEmprestimoLivros = new HashMap<>();    
+    private HashMap<String, ArrayList<Data> >  hMapId_DataDeEmprestimoLivros = new HashMap<>();    
     
     @OneToMany    
     private HashMap<String, ArrayList<Boolean> > hMapId_RankingLivros = new HashMap<>(); 
     
     @OneToMany    
-    private ArrayList<Livro> livrosAlugados = new ArrayList<>();
+    private ArrayList<String> livrosAlugados = new ArrayList<>();
     
     @OneToMany    
-    private ArrayList<Boolean> rankingCliente = new ArrayList<>();
+    private ArrayList<Boolean> rankingCliente;
 
     /// CONSTRUTOR *******************************************************************************
     
     public Cliente(){ 
-        super(); 
+        super();
+        this.rankingCliente = new ArrayList<>();
+        for(int i = 0; i < 5;i++)
+            this.rankingCliente.add(false);
     }
     
     /// GETTERS E SETTERS ************************************************************************
             
+     
+    public int getNumeroLivrosPendentes(){
+        return this.numeroLivrosPendentes;
+    }
+    
+    public void setNumeroLivrosPendentes(int numeroLivrosPendentes){
+        this.numeroLivrosPendentes = numeroLivrosPendentes;
+    }
+    
     public ArrayList<Boolean> getRankingCliente(){
         return this.rankingCliente;
     }
@@ -66,14 +82,14 @@ public class Cliente extends Usuario implements Serializable {
         }
         return cont;
     }
-    
+    /*
     public void setRankingCliente( ArrayList<Boolean> rankingCliente ){
         this.rankingCliente.clear();
         this.rankingCliente = rankingCliente;
     }
-    
+    */
     public void setRankingClienteInt( int valor) throws ServiceException{        
-        if(valor < 0 || valor >5) throw new ServiceException("Valor do ranking do cliente inv�lido!");
+        if(valor < 0 || valor >5) throw new ServiceException("ranking de cliente passado é invalido!");
         else {
             this.rankingCliente.set(0, false);
             this.rankingCliente.set(1, false);
@@ -87,11 +103,11 @@ public class Cliente extends Usuario implements Serializable {
     }
     
     public void setHMapId_RankingLivros(HashMap<String, ArrayList<Boolean> > 
-            hMapId_DataDeEmprestimoLivros){
-        this.hMapId_RankingLivros = hMapId_DataDeEmprestimoLivros;
+            hMapId_RankingLivros){
+        this.hMapId_RankingLivros = hMapId_RankingLivros;
     }
     
-    public void setHMapId_DataDeEmprestimoLivros(HashMap<String, String> 
+    public void setHMapId_DataDeEmprestimoLivros(HashMap<String, ArrayList<Data> > 
            hMapId_DataDeEmprestimoLivros){
         this.hMapId_DataDeEmprestimoLivros = hMapId_DataDeEmprestimoLivros;
     }
@@ -100,7 +116,7 @@ public class Cliente extends Usuario implements Serializable {
         return this.hMapId_RankingLivros;
     }
     
-    public HashMap<String, String> getHMapId_DataDeEmprestimoLivros(){
+    public HashMap<String, ArrayList<Data> > getHMapId_DataDeEmprestimoLivros(){
         return this.hMapId_DataDeEmprestimoLivros;
     }
      
@@ -124,11 +140,11 @@ public class Cliente extends Usuario implements Serializable {
     }
     
     
-    public ArrayList<Livro> getLivrosAlugados() {
+    public ArrayList<String> getLivrosAlugados() {
         return this.livrosAlugados;
     }
     
-    public void setLivrosAlugados(ArrayList<Livro> livrosAlugados) {
+    public void setLivrosAlugados(ArrayList<String> livrosAlugados) {
         this.livrosAlugados = livrosAlugados;
     }
 
@@ -158,15 +174,30 @@ public class Cliente extends Usuario implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Cliente)) {
             return false;
         }
         Cliente other = (Cliente) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+                
+        return !((this.id == null && other.id != null) || 
+                (this.causa.equals(other.causa)) ||
+                (this.login.equals(other.login)) ||
+                (this.nome.equals(other.nome)) ||
+                (this.notificacoes.equals(other.notificacoes)) ||
+                (this.observerList.equals(other.observerList)) ||
+                (this.quantidadeDeMovimentacoes != other.quantidadeDeMovimentacoes) ||
+                (this.quantidadeTentativasIncorretasDeAcesso != other.quantidadeTentativasIncorretasDeAcesso) ||
+                (this.senha.equals(other.senha)) ||
+                (this.status.equals(other.status)) ||
+                (this.id != null && !this.id.equals(other.id)) ||
+                (this.livrosAlugados != other.livrosAlugados) ||
+                (this.numeroDevolucoes != other.numeroDevolucoes) ||
+                (this.numeroEmprestimos != other.numeroEmprestimos) ||
+                (this.numeroLivrosPendentes != other.numeroLivrosPendentes) ||
+                (this.rankingCliente.equals(other.rankingCliente)) ||
+                (this.hMapId_DataDeEmprestimoLivros.equals(other.hMapId_DataDeEmprestimoLivros)) ||
+                (this.hMapId_RankingLivros.equals(other.hMapId_RankingLivros))
+                );
     }
 
     @Override

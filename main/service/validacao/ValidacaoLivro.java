@@ -6,8 +6,6 @@
 package service.validacao;
 
 import exception.ServiceException;
-import java.util.ArrayList;
-import java.util.List;
 import model.Material;
 import model.tiposMaterial.Livro;
 
