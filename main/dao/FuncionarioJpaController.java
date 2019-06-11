@@ -143,11 +143,11 @@ public class FuncionarioJpaController implements Serializable, IUsuarioDAO {
     }
     
     @Override
-    public Usuario consultar(String login) throws DAOException {
+    public Usuario consultar(String login){// throws DAOException {
         Funcionario funcionario = findFuncionario(login);
         
-        if( funcionario == null )
-            throw new DAOException("Funcionario nao encontrado");
+//        if( funcionario == null )
+//            throw new DAOException("Funcionario nao encontrado");
 		
         return funcionario;
     }

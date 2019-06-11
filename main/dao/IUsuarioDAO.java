@@ -44,7 +44,7 @@ public interface IUsuarioDAO {
      * @return Usuario consultado caso seja bem sucedido
      * @throws DAOExceptions 
      */
-    public Usuario consultar(String login) throws DAOException;
+    public Usuario consultar(String login);// throws DAOException;
 
     /**
      * Consulta todos os usuário no Banco de dados e retorna-o caso seja bem sucedido. 

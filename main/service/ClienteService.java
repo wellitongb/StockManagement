@@ -23,8 +23,8 @@ public class ClienteService extends UsuarioService{
 
     /// ATRIBUTOS ********************************************************************************
     
-    private Usuario usuarioAtual;
-    private Usuario usuarioAlterado;
+//    private Usuario usuarioAtual;
+//    private Usuario usuarioAlterado;
     
     ClienteService(){
         this.usuarioDAO = ClienteJpaController.getInstance();
@@ -46,7 +46,7 @@ public class ClienteService extends UsuarioService{
                 break;
             } catch (DAOException ex) {
                 if( cont == 0)
-                    throw new ServiceException( "Operacao invalida" );
+                    throw new ServiceException( "Operação não concluida!" );
             }
         }
         
@@ -60,13 +60,17 @@ public class ClienteService extends UsuarioService{
             while (cont > 0){
                 --cont;
                 try {
-                    validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos(), false );
-                    Cliente cliente = (Cliente) usuario;
-                    usuarioDAO.alterar(cliente);
+                    validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos(), false );  /// Verifica se existe e se houve problemna na passagem de informacao
+                    validacaoUsuario.validacao(usuarioAlterado, usuarioDAO.consultarTodos(), false );   /// Verifica se existe e se houve problemna na passagem de informacao                   
+                    
+                    //validar os atributos segundo as regras de negocio
+                    
+                    Cliente clienteAlterado = (Cliente) usuarioAlterado;
+                    usuarioDAO.alterar(clienteAlterado);
                     break;
                 } catch (DAOException ex) {
                     if( cont == 0)
-                        throw new ServiceException( "Operacao invalida" );
+                        throw new ServiceException( "Operação não concluida!" );
                 }
             }
         
@@ -76,6 +80,8 @@ public class ClienteService extends UsuarioService{
 	@Override
 	public String remover(Usuario usuario) throws ServiceException{
 
+            int cont = 3;
+            
             if (!usuario.getClass().equals(Cliente.class)) 
                 throw new ServiceException("Tipo de usuário inválido!");
             
@@ -86,17 +92,22 @@ public class ClienteService extends UsuarioService{
                     throw new ServiceException("Usuario não existente!");
                 
                 } catch(ServiceException ex){
-                    if(ex.getMessage().equals("Usuario existente!"))
-                        try {
-                            usuarioDAO.remover(cliente);
-                        } catch (DAOException ex1) {
-                            throw new ServiceException( "Operacao invalida" );
+                    if(ex.getMessage().equals("Usuario existente!")){
+                        while (cont > 0){
+                            cont--;
+                            try {                                
+                                usuarioDAO.remover(cliente);
+                                break;
+                            } catch (DAOException ex1) {
+                                if(cont == 0)
+                                    throw new ServiceException( "Operação não concluida!" );
+                            }
+                        }
                     }
                     else{
                         throw new ServiceException(ex.getMessage());
-                    } 
-                
-            }
+                    }                
+                }
 
             return "OK";
 	}

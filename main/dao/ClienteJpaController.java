@@ -143,11 +143,11 @@ public class ClienteJpaController implements Serializable, IUsuarioDAO {
     }
     
     @Override
-    public Usuario consultar(String login) throws DAOException {
+    public Usuario consultar(String login){// throws DAOException {
         Cliente cliente = findCliente(login);
         
-        if( cliente == null )
-            throw new DAOException("Cliente nao encontrado!");
+//        if( cliente == null )
+//            throw new DAOException("Cliente nao encontrado!");
 		
         return cliente;
     }
