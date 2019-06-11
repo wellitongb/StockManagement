@@ -80,26 +80,19 @@ public abstract class UsuarioService {
     public abstract List<String> ranquear(IRankingUsuarioStrategy rankingUsuario) throws ServiceException;
     
     /**
-     * Valida um usuario caso bem sucedido. Caso contrario, lanca-se uma excecao 
-     * @param usuario   Usuario a ser adicionado
-     * @param usuarios  Lista contendo todos os usuarios
-     * @return Um string contendo ok caso bem sucedido
-     * @throws exception.ServiceException
-     */
-    public abstract String validacao(Usuario usuario,  List<Usuario> usuarios) throws ServiceException;
-    
-    /**
      * Adiciona um usuario caso bem sucedido. Caso contrario, lanca-se uma excecao 
+     * @param usuario
      * @return Um string contendo ok caso bem sucedido
      * @throws exception.ServiceException
      */
-    public abstract String verNotificacao() throws ServiceException;
+    public abstract String verNotificacao(Usuario usuario) throws ServiceException;
     
     /**
      * Notifica todos os usuarios
      * @param notificacao   Mensagem de notificacao
+     * @param usuario
      * @throws ServiceException 
      */
-    public abstract void notificar(String notificacao) throws ServiceException;
+    public abstract void notificar(String notificacao, Usuario usuario) throws ServiceException;
     
 }

@@ -4,7 +4,7 @@ import service.raqueamento.IRankingMaterialStrategy;
 import service.validacao.ValidacaoMaterial;
 import java.util.List;
 
-import dao.LivroDAOJPA;
+import dao.LivroJpaController;
 import model.Material;
 import model.tiposMaterial.Livro;
 import exception.ServiceException;
@@ -99,5 +99,10 @@ public class LivroService extends MaterialService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    @Override
+    public String validacao(Material material) throws ServiceException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

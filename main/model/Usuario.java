@@ -197,10 +197,16 @@ public abstract class Usuario implements Serializable, INotificacaoObserver, INo
     /**
      * Adiciona uma notificação à fila de notificações do usuário
      * @param notificacao   Conteúdo da notificação
+     * @throws exception.ServiceException
      */
     @Override
-    public void notificar(String notificacao) {
-        notificacoes.add(notificacao);
+    public void notificar(String notificacao) throws ServiceException {
+        try{
+            notificacoes.add(notificacao);
+
+        }catch(NullPointerException EX){
+            throw new ServiceException("Fila de notificações não existe!");
+        }
     }
 
     /**

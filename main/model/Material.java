@@ -22,13 +22,14 @@ import javax.persistence.TemporalType;
 
 /// CLASSES PRÓPRIAS
 import model.notification.INotificacaoObserver;
+import model.notification.INotificacaoSubject;
 
 /**
  * Representa um material
  */
 @Entity
 @Inheritance( strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Material implements Serializable {
+public abstract class Material implements Serializable, INotificacaoSubject {
 
     /// ATRIBUTOS ********************************************************************************
     

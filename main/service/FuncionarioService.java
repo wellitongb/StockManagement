@@ -1,34 +1,28 @@
 package service;
 
-import service.raqueamento.IRankingUsuarioStrategy;
-import java.util.List;
-
-import dao.ClienteJpaController;
+import dao.FuncionarioJpaController;
 import exception.DAOException;
 import exception.ServiceException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import model.tiposUsuario.Cliente;
+import service.raqueamento.IRankingUsuarioStrategy;
+import java.util.List;
+
 import model.Usuario;
-import service.validacao.ValidacaoCliente;
+import model.tiposUsuario.Funcionario;
+import service.validacao.ValidacaoFuncionario;
 
-//Revisar classe!
-
-/**
- * Classe que representa as funcionalidades desempenhadas pelo cliente
- * @see Cliente
- * @see Usuario
- */
-public class ClienteService extends UsuarioService{
-
-    /// ATRIBUTOS ********************************************************************************
+public class FuncionarioService extends UsuarioService {
     
-    ClienteService(){
-        this.usuarioDAO = ClienteJpaController.getInstance();
-        this.validacaoUsuario = new ValidacaoCliente();
-    }
+        /// ATRIBUTOS ********************************************************************************
+
+        FuncionarioService(){
+            this.usuarioDAO = FuncionarioJpaController.getInstance();
+            this.validacaoUsuario = new ValidacaoFuncionario();
+        }    
     
-    /// MÉTODOS **********************************************************************************
+    
+	/// MÉTODOS **********************************************************************************
 
     @Override
     public String adicionar(Usuario usuario) throws ServiceException{
@@ -38,8 +32,8 @@ public class ClienteService extends UsuarioService{
             --cont;
             try {
                 validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos(), true );
-                Cliente cliente = (Cliente) usuario;
-                usuarioDAO.adicionar(cliente);
+                Funcionario funcionario = (Funcionario) usuario;
+                usuarioDAO.adicionar(funcionario);
                 break;
             } catch (DAOException ex) {
                 if( cont == 0)
@@ -59,11 +53,8 @@ public class ClienteService extends UsuarioService{
                 try {
                     validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos(), false );  /// Verifica se existe e se houve problemna na passagem de informacao
                     validacaoUsuario.validacao(usuarioAlterado, usuarioDAO.consultarTodos(), false );   /// Verifica se existe e se houve problemna na passagem de informacao                   
-                    
-                    //validar os atributos segundo as regras de negocio
-                    
-                    Cliente clienteAlterado = (Cliente) usuarioAlterado;
-                    usuarioDAO.alterar(clienteAlterado);
+                    Funcionario funcionarioAlterado = (Funcionario) usuarioAlterado;
+                    usuarioDAO.alterar(funcionarioAlterado);
                     break;
                 } catch (DAOException ex) {
                     if( cont == 0)
@@ -79,10 +70,10 @@ public class ClienteService extends UsuarioService{
 
             int cont = 3;
             
-            if (!usuario.getClass().equals(Cliente.class)) 
+            if (!usuario.getClass().equals(Funcionario.class)) 
                 throw new ServiceException("Tipo de usuário inválido!");
             
-            Cliente cliente = (Cliente) usuario;
+            Funcionario funcionario = (Funcionario) usuario;
             
                 try {
                     validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos(), true );
@@ -93,7 +84,7 @@ public class ClienteService extends UsuarioService{
                         while (cont > 0){
                             cont--;
                             try {                                
-                                usuarioDAO.remover(cliente);
+                                usuarioDAO.remover(funcionario);
                                 break;
                             } catch (DAOException ex1) {
                                 if(cont == 0)
@@ -114,21 +105,21 @@ public class ClienteService extends UsuarioService{
 
             String mensagem = "";
             
-            if (!usuario.getClass().equals(Cliente.class)) 
+            if (!usuario.getClass().equals(Funcionario.class)) 
                 throw new ServiceException("Tipo de usuário inválido!");
             
             try {
                 validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos(), true );
             } catch(ServiceException ex){
                 if(ex.getMessage().equals("Usuario existente!") ){
-                    Cliente clienteResultado = (Cliente) usuarioDAO.consultar(usuario.getLogin());
-                    if(clienteResultado != null)
-                       return clienteResultado.toString();
+                    Funcionario funcionarioResultado = (Funcionario) usuarioDAO.consultar(usuario.getLogin());
+                    if(funcionarioResultado != null)
+                       return funcionarioResultado.toString();
                     else
                         mensagem = "Operacao invalida!";
                 }
                 else
-                    mensagem = "Cliente não existe!";
+                    mensagem = "Funcionario não existe!";
             }
 	    throw new ServiceException(mensagem);
 	
@@ -137,20 +128,20 @@ public class ClienteService extends UsuarioService{
 	@Override
 	public List<String> consultarTodos() throws ServiceException {
             
-            List<Cliente> clientes = new ArrayList<>();
+            List<Funcionario> funcionarios = new ArrayList<>();
             List<Usuario> usuarios = usuarioDAO.consultarTodos();
             
             if(usuarios.isEmpty()) 
-                throw new ServiceException("Não há clientes!");
+                throw new ServiceException("Não há funcionarios!");
             
             for(Usuario usuario: usuarios){
-                clientes.add((Cliente) usuario);
+                funcionarios.add((Funcionario) usuario);
             }
             
             List<String> retornos = new ArrayList<>();
             
-            for(Cliente cliente: clientes){
-                retornos.add(cliente.toString());
+            for(Funcionario funcionario: funcionarios){
+                retornos.add(funcionario.toString());
             }
             
             return retornos;
@@ -160,8 +151,8 @@ public class ClienteService extends UsuarioService{
 	@Override
 	public List<String> consultaEspecifica(List<String> params, List<String> keys) throws ServiceException {
             boolean entrou = false;
-            List<String> clientesDados = this.consultarTodos();
-            List<String> clientesResultado = new ArrayList<>();
+            List<String> funcionariosDados = this.consultarTodos();
+            List<String> funcionariosResultado = new ArrayList<>();
             List<String> teste = new ArrayList<>();
             
             
@@ -169,29 +160,29 @@ public class ClienteService extends UsuarioService{
                     itParam.hasNext() && itKey.hasNext();) {
                 String param = itParam.next();
                 String key = itKey.next();
-                for(String cliente: clientesDados){
-                    String atributos[] = cliente.split(".");
+                for(String funcionario: funcionariosDados){
+                    String atributos[] = funcionario.split(".");
                     for(String atributoValor : atributos){
                         if(atributoValor.matches(param)){
                             if(atributoValor.matches(key)){
-                                teste.add(cliente);
+                                teste.add(funcionario);
                                 break;
                             }
                         }
                     }    
                 }
                 
-                if(!entrou && clientesResultado.isEmpty()){
+                if(!entrou && funcionariosResultado.isEmpty()){
                     entrou = true;
-                    clientesResultado.addAll(teste);
+                    funcionariosResultado.addAll(teste);
                 }
                 else 
-                    clientesResultado.retainAll(teste);
+                    funcionariosResultado.retainAll(teste);
                
                 teste.clear();
             }
             
-            return clientesResultado;
+            return funcionariosResultado;
             
 	}
         
@@ -206,9 +197,9 @@ public class ClienteService extends UsuarioService{
         return usuario.getNoficacao();
     }
 
-    @Override
+     @Override
     public void notificar(String notificacao, Usuario usuario) throws ServiceException {
         usuario.notificar(notificacao);
     }
-   
+
 }
