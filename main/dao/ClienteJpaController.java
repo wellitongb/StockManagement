@@ -147,7 +147,7 @@ public class ClienteJpaController implements Serializable, IUsuarioDAO {
         Cliente cliente = findCliente(login);
         
         if( cliente == null )
-            throw new DAOException("Funcionario nao encontrado");
+            throw new DAOException("Cliente nao encontrado!");
 		
         return cliente;
     }
@@ -158,13 +158,13 @@ public class ClienteJpaController implements Serializable, IUsuarioDAO {
      }
     
     @Override
-    public List<Usuario> consultarTodos() throws DAOException {
+    public List<Usuario> consultarTodos(){// throws DAOException {
         
         List<Cliente> clientes = findClienteEntities();
-    	ArrayList<Usuario> usuarios = new ArrayList<Usuario>(); 
+    	ArrayList<Usuario> usuarios = new ArrayList<>(); 
 		
         if( clientes == null )
-            throw new DAOException("Funcionario nao encontrado");
+            return usuarios;
 		
         for( Cliente i : clientes) {
             usuarios.add(i);

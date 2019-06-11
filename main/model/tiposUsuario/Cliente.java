@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import model.tiposMaterial.Livro;
 import exception.ServiceException;
 import java.io.Serializable;
+import java.util.Map;
 import javax.persistence.OneToMany;
 import model.Usuario;
 import model.Data;
@@ -154,12 +155,42 @@ public class Cliente extends Usuario implements Serializable {
     protected String ImplementYourToString() {		
         String myObjectInString = "";
 
-        myObjectInString+= " " +  this.getHMapId_DataDeEmprestimoLivros().toString();
-        myObjectInString+= " " + this.getHMapId_RankingLivros();
-        myObjectInString+= " " + this.getLivrosAlugados();
-        myObjectInString+= " " + String.valueOf(this.numeroDevolucoes);
-        myObjectInString+= " " + String.valueOf(this.numeroEmprestimos);
-        myObjectInString+= " " + this.rankingCliente.toString();
+        myObjectInString+= "."+ "HMapId_DataDeEmprestimoLivros:" +"|";
+        
+        for(Map.Entry<String, ArrayList<Data>> objeto : 
+            this.getHMapId_DataDeEmprestimoLivros().entrySet()) {
+                myObjectInString+= "(" + objeto.getKey() + "," + 
+                        objeto.getValue() + "),";
+                
+            }
+        //myObjectInString+= "|";
+
+        myObjectInString+= "." + "HMapId_RankingLivros:" +"|";
+        
+        for(Map.Entry<String, ArrayList<Boolean>> objeto : 
+            this.getHMapId_RankingLivros().entrySet()) {
+                myObjectInString+= "(" + objeto.getKey() + "," + 
+                        objeto.getValue() + "), ";
+                
+            }
+        //myObjectInString+= "|";
+        
+
+        myObjectInString+= "."  + "LivrosAlugados:" + "{";
+        for(String LivroID: this.getLivrosAlugados())
+            myObjectInString+= LivroID + ",";
+        //myObjectInString+= "}";
+        
+        myObjectInString+= "." + "NumeroDevolucoes:" + 
+                String.valueOf(this.numeroDevolucoes);
+        myObjectInString+= "." + "NumeroEmprestimos:" + 
+                String.valueOf(this.numeroEmprestimos);
+        
+        myObjectInString+= "." + "RankingCliente:" + "{";
+        for(boolean valor: this.rankingCliente)
+            myObjectInString+= valor + ",";
+        //myObjectInString+= "}";    
+        
 
         return myObjectInString;
     } 

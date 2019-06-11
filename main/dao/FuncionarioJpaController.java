@@ -158,14 +158,14 @@ public class FuncionarioJpaController implements Serializable, IUsuarioDAO {
      }
     
     @Override
-    public List<Usuario> consultarTodos() throws DAOException {
+    public List<Usuario> consultarTodos(){
         
         List<Funcionario> funcionarios = findFuncionarioEntities();
     	ArrayList<Usuario> usuarios = new ArrayList<Usuario>(); 
 		
         if( funcionarios == null )
-            throw new DAOException("Funcionario nao encontrado");
-		
+            return usuarios;
+            
         for( Funcionario i : funcionarios) {
             usuarios.add(i);
         }

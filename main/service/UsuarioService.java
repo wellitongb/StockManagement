@@ -48,25 +48,25 @@ public abstract class UsuarioService {
     public abstract String remover(Usuario usuario) throws ServiceException;
     
     /**
-     * Consulta um usuario caso bem sucedido. Caso contrario, lanca-se uma excecao 
-     * @param usuario   Usuario a ser consultado
-     * @return Um string contendo dados do usuario caso bem sucedido
+     * Consulta um usuario caso bem sucedido. Caso contrario, lanca-se uma excecao.
+     * @param usuario   Usuario a ser consultado.
+     * @return Um string contendo dados do usuario caso bem sucedido.
      * @throws exception.ServiceException
      */
     public abstract String consultar(Usuario usuario) throws ServiceException;
     
     /**
-     * Consulta todos usuarios caso bem sucedido. Caso contrario, lanca-se uma excecao 
-     * @return Lista de strings contendo dados dos usuarios caso bem sucedido
+     * Consulta todos usuarios caso bem sucedido. Caso contrario, lanca-se uma exceção. 
+     * @return Lista de strings contendo dados dos usuarios caso bem sucedido.
      * @throws exception.ServiceException
      */
     public abstract List<String> consultarTodos() throws ServiceException;
     
     /**
-     * Consulta por meio de parametros caso bem sucedido. Caso contrario, lanca-se uma excecao 
+     * Consulta usuarios por meio de parametros caso bem sucedido. Caso contrario, lanca-se uma exceção. 
      * @param params    Parametros da busca
      * @param keys  Chaves da busca
-     * @return Um string contendo ok caso bem sucedido
+     * @return Lista de strings contendo dados dos usuarios caso bem sucedido.
      * @throws exception.ServiceException
      */
     public abstract List<String> consultaEspecifica(List<String> params, List<String> keys) throws ServiceException;

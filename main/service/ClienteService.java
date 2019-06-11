@@ -1,15 +1,13 @@
 package service;
 
 import service.raqueamento.IRankingUsuarioStrategy;
-import service.validacao.ValidacaoUsuario;
 import java.util.List;
 
 import dao.ClienteJpaController;
-import dao.IUsuarioDAO;
 import exception.DAOException;
 import exception.ServiceException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.Iterator;
 import model.tiposUsuario.Cliente;
 import model.Usuario;
 import service.validacao.ValidacaoCliente;
@@ -78,29 +76,25 @@ public class ClienteService extends UsuarioService{
 	@Override
 	public String remover(Usuario usuario) throws ServiceException{
 
+            if (!usuario.getClass().equals(Cliente.class)) 
+                throw new ServiceException("Tipo de usuário inválido!");
+            
             Cliente cliente = (Cliente) usuario;
             
-            int cont = 3;
-            while (cont > 0){
-                --cont;
                 try {
                     validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos(), true );
-                    usuarioDAO.remover(cliente);
-                    break;
-                } catch (DAOException ex) {
-                    if( cont == 0)
-                        throw new ServiceException( "Operacao invalida" );
-                } catch( ServiceException ex){
-                    if( ex.getMessage().equals("Usuario existente!") )
+                    throw new ServiceException("Usuario não existente!");
+                
+                } catch(ServiceException ex){
+                    if(ex.getMessage().equals("Usuario existente!"))
                         try {
                             usuarioDAO.remover(cliente);
                         } catch (DAOException ex1) {
                             throw new ServiceException( "Operacao invalida" );
                     }
                     else{
-                        throw new ServiceException( ex.getMessage() );
+                        throw new ServiceException(ex.getMessage());
                     } 
-                }
                 
             }
 
@@ -111,73 +105,99 @@ public class ClienteService extends UsuarioService{
 	public String consultar(Usuario usuario) throws ServiceException{
 
             String mensagem = "";
-            Cliente cliente = (Cliente) usuario;
             
-            int cont = 3;
-            while (cont > 0){
-                --cont;
-                try {
-                    validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos(), true );
-                    break;
-                } catch (DAOException ex) {
-                    if( cont == 0)
-                        throw new ServiceException( "Operacao invalida" );
-                } catch( ServiceException ex){
-                    if( ex.getMessage().equals("Usuario existente!") )
-                        try {
-                            usuarioDAO.consultar(cliente.getLogin());
-                        } catch (DAOException ex1) {
-                            throw new ServiceException( "Operacao invalida" );
-                    }
-                    
-                    mensagem = ex.getMessage();
-                } 
+            if (!usuario.getClass().equals(Cliente.class)) 
+                throw new ServiceException("Tipo de usuário inválido!");
+            
+            try {
+                validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos(), true );
+            } catch(ServiceException ex){
+                if(ex.getMessage().equals("Usuario existente!") ){
+                    Cliente clienteResultado = (Cliente) usuarioDAO.consultar(usuario.getLogin());
+                    if(clienteResultado != null)
+                       return clienteResultado.toString();
+                    else
+                        mensagem = "Operacao invalida!";
+                }
+                else
+                    mensagem = "Cliente não existe!";
             }
-	    throw new ServiceException( mensagem );
-            return "OK";
+	    throw new ServiceException(mensagem);
+	
+        }
+
+	@Override
+	public List<String> consultarTodos() throws ServiceException {
+            
+            List<Cliente> clientes = new ArrayList<>();
+            List<Usuario> usuarios = usuarioDAO.consultarTodos();
+            
+            if(usuarios.isEmpty()) 
+                throw new ServiceException("Não há clientes!");
+            
+            for(Usuario usuario: usuarios){
+                clientes.add((Cliente) usuario);
+            }
+            
+            List<String> retornos = new ArrayList<>();
+            
+            for(Cliente cliente: clientes){
+                retornos.add(cliente.toString());
+            }
+            
+            return retornos;
+            
 	}
 
 	@Override
-	public List<String> consultarTodos() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> consultaEspecifica(List<String> params, List<String> keys) throws ServiceException {
+            boolean entrou = false;
+            List<String> clientesDados = this.consultarTodos();
+            List<String> clientesResultado = new ArrayList<>();
+            List<String> teste = new ArrayList<>();
+            
+            
+            for (Iterator<String> itParam = params.iterator(), itKey = keys.iterator(); 
+                    itParam.hasNext() && itKey.hasNext();) {
+                String param = itParam.next();
+                String key = itKey.next();
+                for(String cliente: clientesDados){
+                    String atributos[] = cliente.split(".");
+                    for(String atributoValor : atributos){
+                        if(atributoValor.matches(param)){
+                            if(atributoValor.matches(key)){
+                                teste.add(cliente);
+                                break;
+                            }
+                        }
+                    }    
+                }
+                
+                if(!entrou && clientesResultado.isEmpty()){
+                    entrou = true;
+                    clientesResultado.addAll(teste);
+                }
+                else 
+                    clientesResultado.retainAll(teste);
+               
+                teste.clear();
+            }
+            
+            return clientesResultado;
+            
 	}
+        
+    @Override
+    public List<String> ranquear(IRankingUsuarioStrategy rankingUsuario) {
+            // TODO Auto-generated method stub
+            return null;
+    }
 
-	@Override
-	public List<String> consultaEspecifica(List<String> params, List<String> keys) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String bloquear(Usuario Usuario, BloqueioUsuario bloqueioUsuario, String causa) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<String> ranquear(IRankingUsuarioStrategy rankingUsuario) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String validacao(Usuario usuario, ValidacaoUsuario validacaoUsuario) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String verNotificacao() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String entrarLoginSenha(String login, String senha) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String verNotificacao() {
+            // TODO Auto-generated method stub
+            return null;
+    }
 
     @Override
     public String validacao(Usuario usuario, List<Usuario> usuarios) throws ServiceException {
@@ -188,5 +208,5 @@ public class ClienteService extends UsuarioService{
     public void notificar(String notificacao) throws ServiceException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+   
 }

@@ -165,16 +165,30 @@ public abstract class Usuario implements Serializable, INotificacaoObserver, INo
     public String toString(){
         String myObjectInString = "";
 
-        myObjectInString+= " " +  this.causa.toString();
-        myObjectInString+= " " + this.login.toString();
-        myObjectInString+= " " + this.nome.toString();
-        myObjectInString+= " " + this.senha.toString();
-        myObjectInString+= " " + String.valueOf(this.id);
-        myObjectInString+= " " + this.notificacoes.toString();
-        myObjectInString+= " " + this.observerList.toString();
-        myObjectInString+= " " + String.valueOf(this.quantidadeDeMovimentacoes);
-        myObjectInString+= " " + String.valueOf(this.quantidadeTentativasIncorretasDeAcesso);
-        myObjectInString+= " " + this.status.toString();
+        myObjectInString+= "." + "Causa:" + this.causa;
+        myObjectInString+= "." + "Login:" + this.login;
+        myObjectInString+= "." + "Nome:" + this.nome;
+        myObjectInString+= "." + "Senha:" + this.senha;
+        myObjectInString+= "." + "ID:" + String.valueOf(this.id);
+        
+        myObjectInString+= "." + "Notificacoes:" + "{";
+        for(String notificacao: this.notificacoes)
+            myObjectInString+=  notificacao + ",";
+        //myObjectInString+= "}";
+        
+        myObjectInString+= "." + "Observadores:" +"{";
+        for(INotificacaoObserver Observer: this.observerList)
+            myObjectInString+= ((Usuario) Observer).login + ",";
+        //myObjectInString+= "}";
+                
+        myObjectInString+= "." + "QuantidadeDeMovimentacoes:" + 
+                String.valueOf(this.quantidadeDeMovimentacoes);
+        
+        myObjectInString+= "." + "QuantidadeTentativasIncorretasDeAcesso:" + 
+                String.valueOf(this.quantidadeTentativasIncorretasDeAcesso);
+        
+        myObjectInString+= "." + "Status:" + 
+                this.status.toString();
 
         myObjectInString += ImplementYourToString();
         return myObjectInString;
