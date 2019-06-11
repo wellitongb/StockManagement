@@ -10,11 +10,12 @@ import model.Material;
 import model.tiposMaterial.Livro;
 
 /**
- *
- * @author wellitongb
+ * Representa uma validacao do material livro
  */
 public class ValidacaoLivro extends ValidacaoMaterial{
 
+    /// MÉTODOS **********************************************************************************
+    
     @Override
     protected void validacaoImplementacao(Material material) throws ServiceException {
         

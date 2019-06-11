@@ -13,11 +13,12 @@ import model.Usuario;
 import model.tiposUsuario.Cliente;
 
 /**
- *
- * @author 
+ * Representa uma validacao do usuario cliente
  */
 public class ValidacaoCliente extends ValidacaoUsuario{
-
+    
+    /// MÉTODOS **********************************************************************************
+    
     @Override
     protected void validacaoImplementacao(Usuario usuario) throws ServiceException {
         if ( !usuario.getClass().equals(Cliente.class) ) 

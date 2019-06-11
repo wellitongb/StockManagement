@@ -7,8 +7,7 @@ import model.Usuario;
 import model.notification.INotificacaoObserver;
 
 /**
- * 
- * @author wellitongb
+ * Representa uma valicao de usuario
  */
 public abstract class ValidacaoUsuario {
 
@@ -91,6 +90,12 @@ public abstract class ValidacaoUsuario {
             return "OK";
         }
         
+    /**
+     * Verifica os caracteres do login 
+     * @param palavra   Palavra   
+     * @param usuarios  Lista de usuario
+     * @throws ServiceException 
+     */
     private void verificacaoCaracterLogin(String palavra, List<Usuario> usuarios) throws ServiceException{
 
         if(!palavra.matches("[a-zA-Z[0-9]]")){

@@ -4,18 +4,21 @@ import service.raqueamento.IRankingUsuarioStrategy;
 import service.validacao.ValidacaoUsuario;
 import java.util.List;
 
-import dao.ClienteDAOJDBC;
-import dao.ClienteDAOJDBC;
+import dao.ClienteJpaController;
 import exception.ServiceException;
 import model.tiposUsuario.Cliente;
 import model.Usuario;
 
 //Revisar classe!
 
+/**
+ * Classe que representa as funcionalidades desempenhadas pelo cliente
+ * @see Cliente
+ */
 public class ClienteService extends UsuarioService{
 
 	ClienteService(){
-		this.usuarioDAO = new ClienteDAOJDBC();
+		this.usuarioDAO = ClienteJpaController.getInstance();
 	}
 	
 	@Override
