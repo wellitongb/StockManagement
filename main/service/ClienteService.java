@@ -38,60 +38,103 @@ public class ClienteService extends UsuarioService{
     @Override
     public String adicionar(Usuario usuario) throws ServiceException{
 
-        try {
-            validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos() );
-        } catch (DAOException ex) {
-            throw new ServiceException( ex.getMessage() );
+        int cont = 3;
+        while (cont > 0){
+            --cont;
+            try {
+                validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos(), true );
+                Cliente cliente = (Cliente) usuario;
+                usuarioDAO.adicionar(cliente);
+                break;
+            } catch (DAOException ex) {
+                if( cont == 0)
+                    throw new ServiceException( "Operacao invalida" );
+            }
         }
         
-        Cliente cliente = (Cliente) usuario;
-
-        try {	
-                usuarioDAO.adicionar(cliente);
-        }catch( ServiceException serExc ) {
-                return serExc.getMessage();
-        }
-
         return "OK";
     }
 
 	@Override
-	public String alterar(Usuario usuario, Usuario usuarioAlterado) {
+	public String alterar(Usuario usuario, Usuario usuarioAlterado) throws ServiceException {
 
-		Cliente cliente = (Cliente) usuario;
-		
-		try {	
-			usuarioDAO.alterar(cliente);
-		}catch( ServiceException serExc ) {
-			return serExc.getMessage();
-		}
-		
-		return "OK";
+            int cont = 3;
+            while (cont > 0){
+                --cont;
+                try {
+                    validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos(), false );
+                    Cliente cliente = (Cliente) usuario;
+                    usuarioDAO.alterar(cliente);
+                    break;
+                } catch (DAOException ex) {
+                    if( cont == 0)
+                        throw new ServiceException( "Operacao invalida" );
+                }
+            }
+        
+        return "OK";
 	}
 
 	@Override
-	public String remover(Usuario usuario) {
-		Cliente cliente = (Cliente) usuario;
-		
-		try {	
-			usuarioDAO.remover(cliente);
-		}catch( ServiceException serExc ) {
-			return serExc.getMessage();
-		}
-		
-		return "OK";
+	public String remover(Usuario usuario) throws ServiceException{
+
+            Cliente cliente = (Cliente) usuario;
+            
+            int cont = 3;
+            while (cont > 0){
+                --cont;
+                try {
+                    validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos(), true );
+                    usuarioDAO.remover(cliente);
+                    break;
+                } catch (DAOException ex) {
+                    if( cont == 0)
+                        throw new ServiceException( "Operacao invalida" );
+                } catch( ServiceException ex){
+                    if( ex.getMessage().equals("Usuario existente!") )
+                        try {
+                            usuarioDAO.remover(cliente);
+                        } catch (DAOException ex1) {
+                            throw new ServiceException( "Operacao invalida" );
+                    }
+                    else{
+                        throw new ServiceException( ex.getMessage() );
+                    } 
+                }
+                
+            }
+
+            return "OK";
 	}
 
 	@Override
-	public String consultar(Usuario usuario) {
+	public String consultar(Usuario usuario) throws ServiceException{
 
-		try {	
-			Cliente cliente = (Cliente) usuarioDAO.consultar(cliente.getIdUsuario());
-		}catch( ServiceException serExc ) {
-			return serExc.getMessage();
-		}
-		
-		return "OK";
+            String mensagem = "";
+            Cliente cliente = (Cliente) usuario;
+            
+            int cont = 3;
+            while (cont > 0){
+                --cont;
+                try {
+                    validacaoUsuario.validacao(usuario, usuarioDAO.consultarTodos(), true );
+                    break;
+                } catch (DAOException ex) {
+                    if( cont == 0)
+                        throw new ServiceException( "Operacao invalida" );
+                } catch( ServiceException ex){
+                    if( ex.getMessage().equals("Usuario existente!") )
+                        try {
+                            usuarioDAO.consultar(cliente.getLogin());
+                        } catch (DAOException ex1) {
+                            throw new ServiceException( "Operacao invalida" );
+                    }
+                    
+                    mensagem = ex.getMessage();
+                } 
+            }
+	    throw new ServiceException( mensagem );
+            return "OK";
 	}
 
 	@Override

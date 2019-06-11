@@ -20,9 +20,9 @@ public abstract class ValidacaoUsuario {
      * @throws ServiceException Dá suporte a indicação de problemas relacionados
      * a validação.
      */
-    public String validacao(Usuario usuario, List<Usuario> usuarios) throws ServiceException{
+    public String validacao(Usuario usuario, List<Usuario> usuarios, boolean checarLogin) throws ServiceException{
             
-            verificacaoCaracterLogin(usuario.getLogin(), usuarios);            
+            verificacaoCaracterLogin(usuario.getLogin(), usuarios, checarLogin);            
             
             if(5 <= usuario.getSenha().length() && 
                     usuario.getSenha().length() <= 12 &&
@@ -96,17 +96,20 @@ public abstract class ValidacaoUsuario {
      * @param usuarios  Lista de usuario
      * @throws ServiceException 
      */
-    private void verificacaoCaracterLogin(String palavra, List<Usuario> usuarios) throws ServiceException{
+    private void verificacaoCaracterLogin(String palavra, List<Usuario> usuarios, boolean checarLogin) throws ServiceException{
 
         if(!palavra.matches("[a-zA-Z[0-9]]")){
             throw new 
             ServiceException("Login inválido!");
         }
-
+        
+        if( !checarLogin )
+            return ; 
+        
         for (Usuario usuario : usuarios) {
             if(palavra.matches(usuario.getLogin()))
                 throw new 
-                ServiceException("Login inválido!");
+                ServiceException("Usuario existente!");
         }
 
     }
