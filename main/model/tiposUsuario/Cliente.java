@@ -8,10 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /// CLASSES PRÓPRIAS
-import model.tiposMaterial.Livro;
 import exception.ServiceException;
 import java.io.Serializable;
-import java.util.Map;
 import javax.persistence.OneToMany;
 import model.Usuario;
 import model.Data;
@@ -38,82 +36,74 @@ public class Cliente extends Usuario implements Serializable {
     private int numeroLivrosPendentes = 0;
 
     @OneToMany    
-    private HashMap<String, ArrayList<Data> >  hMapId_DataDeEmprestimoLivros = new HashMap<>();    
+    private HashMap<String, ArrayList<Data> >  hMapId_DataDeEmprestimoLivros;    
     
     @OneToMany    
-    private HashMap<String, ArrayList<Boolean> > hMapId_RankingLivros = new HashMap<>(); 
+    private HashMap<String, Integer > hMapId_RankingLivros; 
     
     @OneToMany    
-    private ArrayList<String> livrosAlugados = new ArrayList<>();
+    private ArrayList<String> livrosAlugados;
     
-    @OneToMany    
-    private ArrayList<Boolean> rankingCliente;
+    @Column(nullable = true)
+    private Integer rankingCliente;
 
     /// CONSTRUTOR *******************************************************************************
     
-    public Cliente(){ 
+    public Cliente(){
         super();
-        this.rankingCliente = new ArrayList<>();
-        for(int i = 0; i < 5;i++)
-            this.rankingCliente.add(false);
+        this.livrosAlugados = new ArrayList<>();
+        this.hMapId_RankingLivros = new HashMap<>();
+        this.hMapId_DataDeEmprestimoLivros = new HashMap<>();
+//        this.rankingCliente = new ArrayList<>();
+//        for(int i = 0; i < 5;i++)
+//            this.rankingCliente.add(false);
     }
     
     /// GETTERS E SETTERS ************************************************************************
-            
-     
-    public int getNumeroLivrosPendentes(){
-        return this.numeroLivrosPendentes;
-    }
-    
-    public void setNumeroLivrosPendentes(int numeroLivrosPendentes){
-        this.numeroLivrosPendentes = numeroLivrosPendentes;
-    }
-    
-    public ArrayList<Boolean> getRankingCliente(){
+                
+    public Integer getRankingCliente(){
         return this.rankingCliente;
     }
 
-    public int getRankingInt(){
-        int cont = 0;
-        for(boolean nivel : this.getRankingCliente() ){
-            
-            if(nivel) 
-                cont++;
-            else break;
-        }
-        return cont;
-    }
-    /*
-    public void setRankingCliente( ArrayList<Boolean> rankingCliente ){
-        this.rankingCliente.clear();
+//    public int getRankingInt(){
+//        int cont = 0;
+//        for(boolean nivel : this.getRankingCliente() ){
+//            
+//            if(nivel) 
+//                cont++;
+//            else break;
+//        }
+//        return cont;
+//    }
+    
+    public void setRankingCliente(Integer rankingCliente ){
         this.rankingCliente = rankingCliente;
     }
-    */
-    public void setRankingClienteInt( int valor) throws ServiceException{        
-        if(valor < 0 || valor >5) throw new ServiceException("ranking de cliente passado é invalido!");
-        else {
-            this.rankingCliente.set(0, false);
-            this.rankingCliente.set(1, false);
-            this.rankingCliente.set(2, false);
-            this.rankingCliente.set(3, false);
-            this.rankingCliente.set(4, false);
-            for(int i = 0; i < valor; i++){
-                this.rankingCliente.set(i, true);
-            }
-        }
-    }
+//    public void setRankingClienteInt( int valor) throws ServiceException{        
+//        if(valor < 0 || valor >5) throw new ServiceException("ranking de cliente passado é invalido!");
+//        else {
+//            this.rankingCliente.set(0, false);
+//            this.rankingCliente.set(1, false);
+//            this.rankingCliente.set(2, false);
+//            this.rankingCliente.set(3, false);
+//            this.rankingCliente.set(4, false);
+//            for(int i = 0; i < valor; i++){
+//                this.rankingCliente.set(i, true);
+//            }
+//        }
+//    }
     
-    public void setHMapId_RankingLivros(HashMap<String, ArrayList<Boolean> > 
-            hMapId_RankingLivros){
-        this.hMapId_RankingLivros = hMapId_RankingLivros;
-    }
+//    public void setHMapId_RankingLivros(HashMap<String, Integer > 
+//            hMapId_RankingLivros){
+//        this.hMapId_RankingLivros = hMapId_RankingLivros;
+//    }
     
-    public void setHMapId_DataDeEmprestimoLivros(HashMap<String, ArrayList<Data> > 
-           hMapId_DataDeEmprestimoLivros){
-        this.hMapId_DataDeEmprestimoLivros = hMapId_DataDeEmprestimoLivros;
-    }
+//    public void setHMapId_DataDeEmprestimoLivros(HashMap<String, ArrayList<Data> > 
+//           hMapId_DataDeEmprestimoLivros){
+//        this.hMapId_DataDeEmprestimoLivros = hMapId_DataDeEmprestimoLivros;
+//    }
     
-    public HashMap<String, ArrayList<Boolean> > getHMapId_RankingLivros(){
+    public HashMap<String, Integer > getHMapId_RankingLivros(){
         return this.hMapId_RankingLivros;
     }
     
@@ -127,7 +117,8 @@ public class Cliente extends Usuario implements Serializable {
     }
 
     public void setNumeroEmprestimos(int numeroEmprestimos) throws ServiceException {
-        if(livrosAlugados.size() > numeroEmprestimos) throw new ServiceException("Valor de numero de emprestimos invalido!");
+//        if(livrosAlugados.size() == numeroEmprestimos) 
+//            throw new ServiceException("Valor de numero de emprestimos invalido!");
         this.numeroEmprestimos = numeroEmprestimos;
     }
 
@@ -136,64 +127,124 @@ public class Cliente extends Usuario implements Serializable {
     }
 
     public void setNumeroDevolucoes(int numeroDevolucoes) throws ServiceException {
-        if(livrosAlugados.size() > numeroDevolucoes) throw new ServiceException("Valor de numero de devolu��es invalido!");
+//        if(livrosAlugados.size() >= numeroDevolucoes) 
+//            throw new ServiceException("Valor de numero de devoluções invalido!");
         this.numeroDevolucoes = numeroDevolucoes;
     }
     
+    public int getNumeroLivrosPendentes(){
+        return this.numeroLivrosPendentes;
+    }
+    
+    public void setNumeroLivrosPendentes(int numeroLivrosPendentes){
+        this.numeroLivrosPendentes = numeroLivrosPendentes;
+    }
     
     public ArrayList<String> getLivrosAlugados() {
         return this.livrosAlugados;
     }
     
-    public void setLivrosAlugados(ArrayList<String> livrosAlugados) {
-        this.livrosAlugados = livrosAlugados;
-    }
+//    public void setLivrosAlugados(ArrayList<String> livrosAlugados) {
+//        this.livrosAlugados = livrosAlugados;
+//    }
 
     /// MÉTODOS **********************************************************************************
         
+    
+    public void adicionarDataDeEmprestimo(String idLivro, Data dataDeEmprestimo) throws ServiceException{
+        ArrayList<Data> dataEmprestimos = this.hMapId_DataDeEmprestimoLivros.get(idLivro);
+        
+        if(this.hMapId_DataDeEmprestimoLivros.get(idLivro) != null){
+            if(dataEmprestimos.contains(dataDeEmprestimo)){
+                throw new ServiceException("Já há essa data de emprestimo!");
+            }
+            else{
+                dataEmprestimos.add(dataDeEmprestimo);
+                this.hMapId_DataDeEmprestimoLivros.put(idLivro, dataEmprestimos);
+            }
+        }
+        else{
+            dataEmprestimos = new ArrayList<>();
+            dataEmprestimos.add(dataDeEmprestimo);
+            this.hMapId_DataDeEmprestimoLivros.put(idLivro, dataEmprestimos);
+        }
+    }
+    
+    public void removerDataDeEmprestimo(String idLivro, Data dataDeEmprestimo) throws ServiceException{
+        ArrayList<Data> dataEmprestimos = this.hMapId_DataDeEmprestimoLivros.get(idLivro);
+        
+        if(this.hMapId_DataDeEmprestimoLivros.get(idLivro) != null){
+            if(dataEmprestimos.contains(dataDeEmprestimo)){
+                dataEmprestimos.remove(dataDeEmprestimo);
+                if(dataEmprestimos.isEmpty())
+                    this.hMapId_DataDeEmprestimoLivros.remove(idLivro);
+                else
+                    this.hMapId_DataDeEmprestimoLivros.put(idLivro, dataEmprestimos);
+                return;
+            }
+        }        
+        
+        throw new ServiceException("Não há essa data de emprestimo!");
+    }
+    
+    public void adicionarRankingLivro(String idLivro, int ranking) throws ServiceException{
+        Integer valor = this.hMapId_RankingLivros.get(idLivro);
+        
+        if(this.hMapId_RankingLivros.get(idLivro) != null){
+            if(ranking != valor){
+                if(ranking >= 0 && ranking <= 5)
+                    this.hMapId_RankingLivros.put(idLivro, valor);
+                else
+                    throw new ServiceException("Ranking do livro é inválido!");
+            }
+        }
+        else{
+            if(ranking >= 0 && ranking <= 5){
+                valor = ranking;
+                this.hMapId_RankingLivros.put(idLivro, valor);
+            }
+            else
+                throw new ServiceException("Ranking do livro é inválido!");
+        }
+    }
+    
+    public void alterarRankingLivro(String idLivro, int ranking) throws ServiceException{
+        adicionarRankingLivro(idLivro, ranking);
+    }
+    
+    public void removerRankingLivro(String idLivro) throws ServiceException{
+        Integer valor = this.hMapId_RankingLivros.get(idLivro);
+        
+        if(valor != null){
+            this.hMapId_RankingLivros.remove(idLivro);
+            return;
+        }
+        
+        throw new ServiceException("Não há ranking para esse livro!");
+    }
+    
+    public void adicionarLivroAlugado(String idLivro) throws ServiceException{
+        if(this.livrosAlugados.contains(idLivro))
+            throw new ServiceException("Livro já consta como alugado!");
+        else
+            this.livrosAlugados.add(idLivro);
+    }
+    
+    public void RemoverLivroAlugado(String idLivro) throws ServiceException{
+        if(!this.livrosAlugados.remove(idLivro))
+            throw new ServiceException("Esse livro não consta como alugado!");
+    }
+    
     @Override
-    protected String ImplementYourToString() {		
-        String myObjectInString = "";
-
-        myObjectInString+= "."+ "HMapId_DataDeEmprestimoLivros:" +"|";
-        
-        for(Map.Entry<String, ArrayList<Data>> objeto : 
-            this.getHMapId_DataDeEmprestimoLivros().entrySet()) {
-                myObjectInString+= "(" + objeto.getKey() + "," + 
-                        objeto.getValue() + "),";
-                
-            }
-        //myObjectInString+= "|";
-
-        myObjectInString+= "." + "HMapId_RankingLivros:" +"|";
-        
-        for(Map.Entry<String, ArrayList<Boolean>> objeto : 
-            this.getHMapId_RankingLivros().entrySet()) {
-                myObjectInString+= "(" + objeto.getKey() + "," + 
-                        objeto.getValue() + "), ";
-                
-            }
-        //myObjectInString+= "|";
-        
-
-        myObjectInString+= "."  + "LivrosAlugados:" + "{";
-        for(String LivroID: this.getLivrosAlugados())
-            myObjectInString+= LivroID + ",";
-        //myObjectInString+= "}";
-        
-        myObjectInString+= "." + "NumeroDevolucoes:" + 
-                String.valueOf(this.numeroDevolucoes);
-        myObjectInString+= "." + "NumeroEmprestimos:" + 
-                String.valueOf(this.numeroEmprestimos);
-        
-        myObjectInString+= "." + "RankingCliente:" + "{";
-        for(boolean valor: this.rankingCliente)
-            myObjectInString+= valor + ",";
-        //myObjectInString+= "}";    
-        
-
-        return myObjectInString;
-    } 
+    public String implementYourToString() {
+        return "numeroEmprestimos&" + numeroEmprestimos + 
+               ", numeroDevolucoes&" + numeroDevolucoes + 
+               ", numeroLivrosPendentes&" + numeroLivrosPendentes + 
+               ", hMapId_DataDeEmprestimoLivros&" + hMapId_DataDeEmprestimoLivros +
+               ", hMapId_RankingLivros&" + hMapId_RankingLivros + 
+               ", livrosAlugados&" + livrosAlugados + 
+               ", rankingCliente&" + rankingCliente;
+    }
         
         
     @Override
@@ -210,25 +261,13 @@ public class Cliente extends Usuario implements Serializable {
         }
         Cliente other = (Cliente) object;
                 
-        return !((this.id == null && other.id != null) || 
-                (!this.causa.equals(other.causa)) ||
-                (!this.login.equals(other.login)) ||
-                (!this.nome.equals(other.nome)) ||
-                (!this.notificacoes.equals(other.notificacoes)) ||
-                (!this.observerList.equals(other.observerList)) ||
-                (this.quantidadeDeMovimentacoes != other.quantidadeDeMovimentacoes) ||
-                (this.quantidadeTentativasIncorretasDeAcesso != other.quantidadeTentativasIncorretasDeAcesso) ||
-                (!this.senha.equals(other.senha)) ||
-                (!this.status.equals(other.status)) ||
-                (!this.id.equals(other.id)) ||
-                (this.livrosAlugados != other.livrosAlugados) ||
-                (this.numeroDevolucoes != other.numeroDevolucoes) ||
-                (this.numeroEmprestimos != other.numeroEmprestimos) ||
-                (this.numeroLivrosPendentes != other.numeroLivrosPendentes) ||
-                (!this.rankingCliente.equals(other.rankingCliente)) ||
-                (!this.hMapId_DataDeEmprestimoLivros.equals(other.hMapId_DataDeEmprestimoLivros)) ||
-                (!this.hMapId_RankingLivros.equals(other.hMapId_RankingLivros))
-                );
+        return !((this.livrosAlugados != other.livrosAlugados) ||
+                 (this.numeroDevolucoes != other.numeroDevolucoes) ||
+                 (this.numeroEmprestimos != other.numeroEmprestimos) ||
+                 (this.numeroLivrosPendentes != other.numeroLivrosPendentes) ||
+                 (!this.rankingCliente.equals(other.rankingCliente)) ||
+                 (!this.hMapId_DataDeEmprestimoLivros.equals(other.hMapId_DataDeEmprestimoLivros)) ||
+                 (!this.hMapId_RankingLivros.equals(other.hMapId_RankingLivros)));
     }
         
 }

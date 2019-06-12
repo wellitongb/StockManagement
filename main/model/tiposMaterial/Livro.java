@@ -150,7 +150,7 @@ public class Livro extends Material implements Serializable{
     /// MÉTODOS **********************************************************************************
         
     @Override
-    protected String ImplementYourToString() {
+    protected String implementYourToString() {
         String myObjectInString = "";
 		
         myObjectInString+= " " + this.autor;

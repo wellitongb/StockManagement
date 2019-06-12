@@ -32,14 +32,15 @@ public class Funcionario extends Usuario implements Serializable {
    
     /// CONSTRUTOR *******************************************************************************
     
-    public Funcionario( ){
+    public Funcionario(StatusFuncionario status){
         super();
+        this.statusFuncionario = status;
     }
-    
+        
     /// GETTERS E SETTERS ************************************************************************
        
     public float getSalario() {
-        return salario;
+        return this.salario;
     }
 
     public void setSalario(float salario) {
@@ -57,13 +58,9 @@ public class Funcionario extends Usuario implements Serializable {
     /// MÉTODOS **********************************************************************************
     
     @Override
-    protected String ImplementYourToString() {
-        String myObjectInString = "";
-
-        myObjectInString+= " " +  this.statusFuncionario.toString();
-        myObjectInString+= " " +  String.valueOf(this.salario);
-
-        return myObjectInString;
+    protected String implementYourToString() {
+        return "salario&" + this.salario + 
+               ", statusFuncionario&" + this.statusFuncionario;
     }
 
     @Override
@@ -80,18 +77,7 @@ public class Funcionario extends Usuario implements Serializable {
         }
         Funcionario other = (Funcionario) object;
                 
-        return !((this.id == null && other.id != null) || 
-                (!this.causa.equals(other.causa)) ||
-                (!this.login.equals(other.login)) ||
-                (!this.nome.equals(other.nome)) ||
-                (!this.notificacoes.equals(other.notificacoes)) ||
-                (!this.observerList.equals(other.observerList)) ||
-                (this.quantidadeDeMovimentacoes != other.quantidadeDeMovimentacoes) ||
-                (this.quantidadeTentativasIncorretasDeAcesso != other.quantidadeTentativasIncorretasDeAcesso) ||
-                (!this.senha.equals(other.senha)) ||
-                (!this.status.equals(other.status)) ||
-                (!this.id.equals(other.id)) ||
-                (this.salario != other.salario) ||
+        return !((this.salario != other.salario) ||
                 (!this.statusFuncionario.equals(other.statusFuncionario))
                 );
     }

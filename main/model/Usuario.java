@@ -23,6 +23,8 @@ import javax.persistence.OneToMany;
 import model.notification.INotificacaoObserver;
 import model.notification.INotificacaoSubject;
 import exception.ServiceException;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 
 /**
  * Representa um usuário abstrato
@@ -72,7 +74,12 @@ public abstract class Usuario implements Serializable, INotificacaoObserver, INo
     
     /// CONSTRUTOR *******************************************************************************
     
-    public Usuario(){ /** vazio **/ }
+    public Usuario(){ 
+        this.observerList = new ArrayList<>();
+        this.notificacoes = new ArrayDeque<>();
+        this.status = StatusSM.NaoBloqueado;
+        this.causa = "";
+    }
     
     /// GETTERS E SETTERS ************************************************************************
     
@@ -154,89 +161,77 @@ public abstract class Usuario implements Serializable, INotificacaoObserver, INo
     }
     
     /// MÉTODOS **********************************************************************************
-    
-    /**
-     * Trata-se, basicamente de um método toString() porém que deve-se obrigatoriamente ser implementado 
-     * @return  String contendo todos os atributos
-     */
-    protected abstract String ImplementYourToString(); 
 
     @Override
-    public String toString(){
-        String myObjectInString = "";
+    public String toString() {
+        return "Usuario{" + "id&" + id + 
+               ", nome&" + nome + 
+               ", login&" + login + 
+               ", senha&" + senha + 
+               ", status&" + status + 
+               ", quantidadeDeMovimentacoes&" + quantidadeDeMovimentacoes + 
+               ", causa&" + causa + 
+               ", observerList&" + observerList + 
+               ", notificacoes&" + notificacoes + 
+               ", quantidadeTentativasIncorretasDeAcesso&" + quantidadeTentativasIncorretasDeAcesso + 
+               ", " +
+                implementYourToString() +
+                '}';
+    } 
 
-        myObjectInString+= "." + "Causa:" + this.causa;
-        myObjectInString+= "." + "Login:" + this.login;
-        myObjectInString+= "." + "Nome:" + this.nome;
-        myObjectInString+= "." + "Senha:" + this.senha;
-        myObjectInString+= "." + "ID:" + String.valueOf(this.id);
-        
-        myObjectInString+= "." + "Notificacoes:" + "{";
-        for(String notificacao: this.notificacoes)
-            myObjectInString+=  notificacao + ",";
-        //myObjectInString+= "}";
-        
-        myObjectInString+= "." + "Observadores:" +"{";
-        for(INotificacaoObserver Observer: this.observerList)
-            myObjectInString+= ((Usuario) Observer).login + ",";
-        //myObjectInString+= "}";
-                
-        myObjectInString+= "." + "QuantidadeDeMovimentacoes:" + 
-                String.valueOf(this.quantidadeDeMovimentacoes);
-        
-        myObjectInString+= "." + "QuantidadeTentativasIncorretasDeAcesso:" + 
-                String.valueOf(this.quantidadeTentativasIncorretasDeAcesso);
-        
-        myObjectInString+= "." + "Status:" + 
-                this.status.toString();
-
-        myObjectInString += ImplementYourToString();
-        return myObjectInString;
-    }	
-
+//    }
     /**
-     * Adiciona uma notificação à fila de notificações do usuário
-     * @param notificacao   Conteúdo da notificação
-     * @throws exception.ServiceException
+     * Trata-se basicamente de um método toString() porém deve-se obrigatoriamente ser implementado
+     * pelas classes filhas de Usuario, a fim de adicionar as informações de seus atributos.
+     * @return  String contendo todos os atributos seguindo o padrão do método
+     * toString de Usuario.
      */
+    protected abstract String implementYourToString(); 
+    
     @Override
     public void notificar(String notificacao) throws ServiceException {
         try{
-            notificacoes.add(notificacao);
-
-        }catch(NullPointerException EX){
+            this.notificacoes.add(notificacao);
+        }catch(Exception ex){
             throw new ServiceException("Fila de notificações não existe!");
         }
     }
-
-    /**
-     * Registra um observador do usuário
-     * @param  obs  Observador a ser registrado
-     */
+    
     @Override
-    public void registrarObserver(INotificacaoObserver obs) {
-        observerList.add(obs);
-    }
-
-    /**
-     * Desregistra um observador do usuário
-     * @param obs 
-     */
-    @Override
-    public void desregistrarObserver(INotificacaoObserver obs) {
-        observerList.remove(obs);
+    public void registrarObserver(INotificacaoObserver obs) throws ServiceException {
+        if(obs == null)
+            throw new ServiceException("Observador invalido!");
+        
+        try{
+            this.observerList.add(obs);
+        }catch(Exception ex){
+            throw new ServiceException("Fila de observadores não existe!");
+        }
     }
 
     
-    /**
-     * Notifica todos usuários com um mensagem
-     * @param notificacao Mensagem a ser notificada
-     */
     @Override
-    public void notificarObservers(String notificacao) {
+    public void desregistrarObserver(INotificacaoObserver obs) throws ServiceException{
+        boolean result = false;
+        
+        if(obs == null)
+            throw new ServiceException("Observador invalido!");
+        
+        try{
+            result = this.observerList.remove(obs);
+        }catch(Exception ex){
+            throw new ServiceException("Fila de observadores não existe!");
+        }
+        
+        if(result == false)
+            throw new ServiceException("Não há esse observador na lista!");
+    }
 
-        for( INotificacaoObserver i: observerList )
-            i.notificar(notificacao);
+        
+    @Override
+    public void notificarObservers(String notificacao) throws ServiceException{
+        for( INotificacaoObserver observer: this.observerList )
+            observer.notificar("Notificação: " + notificacao);
     }
 	
     
@@ -245,6 +240,11 @@ public abstract class Usuario implements Serializable, INotificacaoObserver, INo
         return implementYourHashCode();
     }
     
+    /**
+     * Trata-se basicamente de um método hasCode() porém deve-se obrigatoriamente ser implementado
+     * pelas classes filhas de Usuario.
+     * @return  Um valor inteiro que identifica a instância.
+     */
     protected abstract int implementYourHashCode();
 
     @Override
@@ -252,9 +252,30 @@ public abstract class Usuario implements Serializable, INotificacaoObserver, INo
         if (!(object instanceof Usuario)) {
             return false;
         }
-        return implementYourEquals(object);
+        
+        Usuario usuario = (Usuario) object;
+        
+        return !((this.id == null && usuario.id != null) || 
+                 (!this.causa.equals(usuario.causa)) ||
+                 (!this.login.equals(usuario.login)) ||
+                 (!this.nome.equals(usuario.nome)) ||
+                 (!this.notificacoes.equals(usuario.notificacoes)) ||
+                 (!this.observerList.equals(usuario.observerList)) ||
+                 (this.quantidadeDeMovimentacoes != usuario.quantidadeDeMovimentacoes) ||
+                 (this.quantidadeTentativasIncorretasDeAcesso != usuario.quantidadeTentativasIncorretasDeAcesso) ||
+                 (!this.senha.equals(usuario.senha)) ||
+                 (!this.status.equals(usuario.status)) ||
+                 (!this.id.equals(usuario.id))) 
+                && implementYourEquals(object);
     }
     
+    /**
+     * Trata-se basicamente de um método equals() porém que deve-se obrigatoriamente ser implementado
+     * pelas classes filhas de Usuario.
+     * @param object
+     * @return  Um valor boolean que, se verdadeiro, indica que object é igual à
+     * implementação em questão. Caso contrário, são diferentes.
+     */
     protected abstract boolean implementYourEquals(Object object);
     
 }

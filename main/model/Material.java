@@ -5,7 +5,9 @@
  */
 package model;
 
+import exception.ServiceException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -63,7 +65,11 @@ public abstract class Material implements Serializable, INotificacaoSubject {
 
     /// CONSTRUTOR *******************************************************************************
     
-    public Material(){ /** vazio **/ }
+    public Material(){ 
+        this.observerList = new ArrayList<>();
+        this.status = StatusSM.NaoBloqueado;
+        this.causa = "";
+    }
     
     /// GETTERS E SETTERS ************************************************************************
         
@@ -139,9 +145,6 @@ public abstract class Material implements Serializable, INotificacaoSubject {
         return observerList;
     }
 
-    public void setObserverList(List<INotificacaoObserver> observerList) {
-        this.observerList = observerList;
-    }
     
     /// MÉTODOS **********************************************************************************
     
@@ -149,24 +152,21 @@ public abstract class Material implements Serializable, INotificacaoSubject {
      * Trata-se, basicamente de um método toString() porém que deve-se obrigatoriamente ser implementado 
      * @return  String contendo todos os atributos
      */
-    protected abstract String ImplementYourToString(); 
+    protected abstract String implementYourToString();
 	
     @Override
-    public String toString(){
-        String myObjectInString = "";
-
-        myObjectInString+= this.causa;
-        myObjectInString+= this.dataEntrada.toString();
-        myObjectInString+= String.valueOf(this.id);
-        myObjectInString+= this.observerList.toString();
-        myObjectInString+= this.status.toString();
-        myObjectInString+= String.valueOf(this.valorUnitario);
-        myObjectInString+= String.valueOf(Material.quantidadeEspacoTotal);
-        myObjectInString+= String.valueOf(Material.quantidadeMateriasTotal);
-
-        myObjectInString += ImplementYourToString();
-        return myObjectInString;
-    }
+    public String toString() {
+        return "Material{" + "id=" + this.id + 
+               ", quantidade=" + this.quantidade + 
+               ", causa=" + this.causa + 
+               ", valorUnitario=" + this.valorUnitario + 
+               ", dataEntrada=" + this.dataEntrada + 
+               ", observerList=" + this.observerList + 
+               ", status=" + this.status +
+               ", " +
+                implementYourToString() +
+                + '}';
+    }    
 
     @Override
     public int hashCode() {
@@ -184,5 +184,40 @@ public abstract class Material implements Serializable, INotificacaoSubject {
     }
     
     protected abstract boolean implementYourEquals(Object object);
+    
+    @Override
+    public void notificarObservers(String notificacao) throws ServiceException{
+        for( INotificacaoObserver observer: this.observerList )
+                observer.notificar("Notificação: " + notificacao);
+    }
+
+    @Override
+    public void registrarObserver(INotificacaoObserver obs) throws ServiceException{
+        if(obs == null)
+            throw new ServiceException("Observador invalido!");
+        
+        try{
+            this.observerList.add(obs);
+        }catch(Exception ex){
+            throw new ServiceException("Fila de observadores não existe!");
+        }
+    }
+
+    @Override
+    public void desregistrarObserver(INotificacaoObserver obs) throws ServiceException{
+        boolean result = false;
+        
+        if(obs == null)
+            throw new ServiceException("Observador invalido!");
+        
+        try{
+            result = this.observerList.remove(obs);
+        }catch(Exception ex){
+            throw new ServiceException("Fila de observadores não existe!");
+        }
+        
+        if(result == false)
+            throw new ServiceException("Não há esse observador na lista!");
+    }
     
 }

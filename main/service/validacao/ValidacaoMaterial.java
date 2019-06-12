@@ -3,6 +3,7 @@ package service.validacao;
 import model.Material;
 import exception.ServiceException;
 import model.StatusSM;
+import model.notification.INotificacaoObserver;
 
 public abstract class ValidacaoMaterial {
 
@@ -22,19 +23,28 @@ public abstract class ValidacaoMaterial {
         }
 
         if((material.getStatus() == StatusSM.NaoBloqueado && 
-                !material.getCausa().equals(" "))
+                !material.getCausa().equals(""))
                 ||
                 (material.getStatus() != StatusSM.NaoBloqueado &&
-                material.getCausa().equals(" "))){
+                material.getCausa().equals(""))){
             throw new 
             ServiceException("Material possui status ou causa indevida!");
 
         }
 
-//        if(material.getDataEntrada() == null){
-//         throw new ServiceException("Material criado sem data de entrada!");
-//        }
+        if(material.getDataEntrada() == null){
+            throw new ServiceException("Material criado sem data de entrada!");
+        }
 
+        if(material.getObserverList()!= null &&
+            !material.getObserverList().isEmpty()){
+             for(INotificacaoObserver materialObserver : material.getObserverList()){
+                 if(materialObserver == null)
+                     throw new 
+                     ServiceException("Usuario possui observadores invalidos!");
+             }
+        }
+        
         if(material.getQuantidade() < 0){
             throw new 
             ServiceException("Material criado com quantidade inválida!");

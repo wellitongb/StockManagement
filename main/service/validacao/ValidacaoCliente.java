@@ -26,13 +26,13 @@ public class ValidacaoCliente extends ValidacaoUsuario{
         
         Cliente cliente = (Cliente) usuario;
         
-        if(cliente.getRankingCliente().size() != 5 ||
-           cliente.getRankingInt() < 0 || cliente.getRankingInt() > 5){
-            throw new ServiceException("ranking de cliente passado é invalido!");
-        }
+        if(cliente.getRankingCliente() < 0 || cliente.getRankingCliente() >5) 
+            throw new ServiceException("ranking de cliente é invalido!");
+        
                         
         
-        if(cliente.getHMapId_DataDeEmprestimoLivros() == null){
+        if(cliente.getHMapId_DataDeEmprestimoLivros() == null||
+           (cliente.getHMapId_DataDeEmprestimoLivros().size() > cliente.getLivrosAlugados().size()) ){
             throw new ServiceException("Lista ID - Data De Empréstimo inválida!");
         }
         else{
@@ -49,17 +49,18 @@ public class ValidacaoCliente extends ValidacaoUsuario{
         }
         
         
-        if(cliente.getHMapId_RankingLivros() == null){
+        if(cliente.getHMapId_RankingLivros() == null ||
+           (cliente.getHMapId_RankingLivros().size() > cliente.getLivrosAlugados().size()) ){
             throw new ServiceException("Lista ID - Ranking de Livros inválida!");
         }
         else{
-            for(Map.Entry<String, ArrayList<Boolean>> objeto : 
+            for(Map.Entry<String, Integer> objeto : 
                     cliente.getHMapId_RankingLivros().entrySet()) {
                 
                 String idLivro = objeto.getKey();
-                ArrayList<Boolean> RankingLivro = objeto.getValue();
+                Integer RankingLivro = objeto.getValue();
                 
-                if(RankingLivro == null || RankingLivro.size() == 5)
+                if(RankingLivro == null || (RankingLivro < 0 && RankingLivro > 5))
                     throw new ServiceException("Lista ID - Ranking de Livros inválida!"
                             + "ID do livro: " + idLivro);
             }
@@ -70,14 +71,19 @@ public class ValidacaoCliente extends ValidacaoUsuario{
             throw new ServiceException("Lista ID de Livros Alugados inválida!");
         }
         
-        if(cliente.getNumeroDevolucoes() < 0)
+        if(cliente.getNumeroDevolucoes() < 0 && 
+           cliente.getNumeroDevolucoes() > cliente.getLivrosAlugados().size())
             throw new ServiceException("Número de devoluções inválido!");
         
-        if(cliente.getNumeroEmprestimos() < 0)
-            throw new ServiceException("Número de emprestimos inválido!");
-        
         if(cliente.getNumeroLivrosPendentes() < 0 && 
-           cliente.getNumeroLivrosPendentes() > cliente.getNumeroEmprestimos())
+           cliente.getNumeroLivrosPendentes() > 
+                cliente.getLivrosAlugados().size())
+            throw new ServiceException("Número de livros pendentes inválido!");
+        
+        if(cliente.getNumeroEmprestimos() < 0 &&
+           cliente.getNumeroEmprestimos() != cliente.getLivrosAlugados().size() &&
+           cliente.getNumeroEmprestimos() != (cliente.getNumeroDevolucoes() + 
+                cliente.getNumeroLivrosPendentes()) )
             throw new ServiceException("Número de emprestimos inválido!");
         
     }
