@@ -51,7 +51,7 @@ public class Livro extends Material implements Serializable{
     private Data dataDeLancamento;
     
     @Column(nullable = true)
-    private int quantidadeDeTotalDeExemplares;
+    private int quantidadeTotalDeExemplares;
     
     @Column(nullable = true)
     private int quantidadeDeExemplaresEmprestados;
@@ -103,11 +103,11 @@ public class Livro extends Material implements Serializable{
     }
     
     public int getQuantidadeDeTotalDeExemplares() {
-        return this.quantidadeDeTotalDeExemplares;
+        return this.quantidadeTotalDeExemplares;
     }
     
     public void setQuantidadeDeTotalDeExemplares(int quantidadeDeTotalDeExemplares) {
-        this.quantidadeDeTotalDeExemplares = quantidadeDeTotalDeExemplares;
+        this.quantidadeTotalDeExemplares = quantidadeDeTotalDeExemplares;
     }
 
     public void setEdicao(String edicao) {
@@ -157,7 +157,7 @@ public class Livro extends Material implements Serializable{
         myObjectInString+= " " + this.edicao;
         myObjectInString+= " " + this.editora;
         myObjectInString+= " " + String.valueOf(this.quantidadeDeExemplaresEmprestados);
-        myObjectInString+= " " + String.valueOf(this.quantidadeDeTotalDeExemplares);
+        myObjectInString+= " " + String.valueOf(this.quantidadeTotalDeExemplares);
         myObjectInString+= " " + this.titulo;
         myObjectInString+= " " + String.valueOf(this.volume);
         myObjectInString+= " " + this.assunto.toString();
@@ -191,7 +191,7 @@ public class Livro extends Material implements Serializable{
                 (!this.editora.equals(other.editora)) ||
                 (!this.status.equals(other.status)) ||
                 (!this.id.equals(other.id)) ||
-                (this.quantidadeDeTotalDeExemplares != other.quantidadeDeTotalDeExemplares) ||
+                (this.quantidadeTotalDeExemplares != other.quantidadeTotalDeExemplares) ||
                 (!this.autor.equals(other.autor)) ||
                 (!this.dataDeLancamento.equals(other.dataDeLancamento)) ||
                 (!this.titulo.equals(other.titulo)) ||

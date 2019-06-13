@@ -83,7 +83,7 @@ public class Data implements Serializable {
     	
     }
     /**
-     * Envia a string que cont�m a data
+     * Envia a string que contém a data
      * @return  A data em formato de string
      */
     @Override
@@ -92,6 +92,29 @@ public class Data implements Serializable {
     }
 
     public int compareTo(Data dataEntrada) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(Integer.valueOf(this.ano) > Integer.valueOf(dataEntrada.getAno()))
+            return -1;
+        else{
+            if(Integer.valueOf(this.ano) == Integer.valueOf(dataEntrada.getAno())){
+                if(Integer.valueOf(this.mes) > Integer.valueOf(dataEntrada.getAno()))
+                    return -1;
+                else{
+                    if(Integer.valueOf(this.mes) == Integer.valueOf(dataEntrada.getMes())){
+                        if(Integer.valueOf(this.dia) > Integer.valueOf(dataEntrada.getDia()))
+                            return -1;
+                        else{
+                            if(Integer.valueOf(this.dia) == Integer.valueOf(dataEntrada.getDia()))
+                                return 0;
+                            else
+                                return -1;
+                        }
+                    }                        
+                    else
+                        return 1;
+                }
+            }
+            else
+                return 1;
+        }
     }
 }

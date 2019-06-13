@@ -236,7 +236,7 @@ public class Cliente extends Usuario implements Serializable {
     }
     
     @Override
-    public String implementYourToString() {
+    protected String implementYourToString() {
         return "numeroEmprestimos&" + numeroEmprestimos + 
                ", numeroDevolucoes&" + numeroDevolucoes + 
                ", numeroLivrosPendentes&" + numeroLivrosPendentes + 
@@ -248,14 +248,14 @@ public class Cliente extends Usuario implements Serializable {
         
         
     @Override
-    public int implementYourHashCode() {
+    protected int implementYourHashCode() {
         int hash = 0;
         hash += ( this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean implementYourEquals(Object object) {
+    protected boolean implementYourEquals(Object object) {
         if (!(object instanceof Cliente)) {
             return false;
         }
