@@ -14,7 +14,7 @@ import service.validacao.ValidacaoFuncionario;
 
 public class FuncionarioService extends UsuarioService {
     
-        /// ATRIBUTOS ********************************************************************************
+        /// CONSTRUTOR *******************************************************************************
 
         FuncionarioService(){
             this.usuarioDAO = FuncionarioJpaController.getInstance();

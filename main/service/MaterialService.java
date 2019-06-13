@@ -7,6 +7,7 @@ import dao.IMaterialDAO;
 import exception.ServiceException;
 
 import java.util.List;
+import service.validacao.ValidacaoMaterial;
 
 /**
  * Classe que representa as funcionalidades desempenhadas pelo material 
@@ -18,6 +19,7 @@ public abstract class MaterialService {
     /// ATRIBUTOS ********************************************************************************
     
     protected IMaterialDAO materialDAO;
+    protected ValidacaoMaterial validacaoMaterial;
 
     /// MÉTODOS **********************************************************************************
     
