@@ -6,7 +6,8 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -19,20 +20,40 @@
       <Button fx:id="button_Entrar" layoutX="511.0" layoutY="18.0" mnemonicParsing="false" onAction="#acaoAutenticarLogin" text="Entrar" />
       <Separator fx:id="separator_loginEbusca" layoutX="40.0" layoutY="58.0" prefHeight="5.0" prefWidth="521.0" />
       <PasswordField fx:id="passwordField_senha" layoutX="347.0" layoutY="18.0" />
-      <TextField fx:id="textField_atributoLivro" layoutX="226.0" layoutY="105.0" prefHeight="25.0" prefWidth="215.0" />
-      <TextArea fx:id="textArea_resultadoBusca" layoutX="122.0" layoutY="200.0" prefHeight="159.0" prefWidth="343.0" />
-      <Button fx:id="buttton_pesquisar" layoutX="260.0" layoutY="151.0" mnemonicParsing="false" onAction="#pesquisaNoBancoEMostra" text="Pesquisar" />
-      <Button fx:id="button_limpar" layoutX="355.0" layoutY="151.0" mnemonicParsing="false" onAction="#limpaCaixaDeTexto" text="Limpar" />
-      <MenuButton fx:id="menuButton_atributoLivro" layoutX="108.0" layoutY="105.0" mnemonicParsing="false" text="MenuButton">
+      <TextField fx:id="textField_busca" layoutX="130.0" layoutY="140.0" prefHeight="25.0" prefWidth="175.0" />
+      <Button fx:id="buttton_pesquisar" layoutX="401.0" layoutY="140.0" mnemonicParsing="false" onAction="#pesquisaNoBancoEMostra" text="Pesquisar" />
+      <Button fx:id="button_limpar" layoutX="475.0" layoutY="140.0" mnemonicParsing="false" onAction="#limpaCaixaDeTexto" text="Limpar" />
+      <MenuButton fx:id="menuButton_tipoDeMaterial" layoutX="233.0" layoutY="98.0" mnemonicParsing="false" text="Tipo de material:">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />
           <MenuItem mnemonicParsing="false" text="Action 2" />
         </items>
       </MenuButton>
-      <Label fx:id="label_descricaoBusca" layoutX="96.0" layoutY="63.0" text="SELECIONE O ATRIBUTO DO LIVRO PARA A BUSCA">
+      <Label fx:id="label_descricaoBusca" layoutX="141.0" layoutY="63.0" text="SELECIONE OS CAMPOS PARA A BUSCA">
          <font>
             <Font size="19.0" />
          </font>
       </Label>
+      <MenuButton fx:id="menuButton_atributo" layoutX="314.0" layoutY="140.0" mnemonicParsing="false" text="Atributo:">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Action 1" />
+            <MenuItem mnemonicParsing="false" text="Action 2" />
+         </items>
+      </MenuButton>
+      <Label fx:id="label_busca" layoutX="73.0" layoutY="144.0" text="Busca:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableView_busca" layoutX="73.0" layoutY="173.0" prefHeight="200.0" prefWidth="455.0">
+        <columns>
+          <TableColumn fx:id="atributo_1" prefWidth="75.0" text="Atributo_1" />
+          <TableColumn fx:id="atributo_2" prefWidth="75.0" text="Atributo_2" />
+            <TableColumn fx:id="atributo_3" prefWidth="75.0" text="Atributo_3" />
+            <TableColumn fx:id="atributo_4" prefWidth="75.0" text="Atributo_4" />
+            <TableColumn fx:id="atributo_5" prefWidth="75.0" text="Atributo_5" />
+            <TableColumn fx:id="atributo_6" prefWidth="75.0" text="Atributo_6" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

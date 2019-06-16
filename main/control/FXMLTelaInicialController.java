@@ -11,12 +11,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 import service.UsuarioService;
@@ -48,10 +48,7 @@ public class FXMLTelaInicialController implements Initializable {
     private PasswordField passwordField_senha;
 
     @FXML
-    private TextField textField_atributoLivro;
-
-    @FXML
-    private TextArea textArea_resultadoBusca;
+    private TextField textField_busca;
 
     @FXML
     private Button buttton_pesquisar;
@@ -60,14 +57,39 @@ public class FXMLTelaInicialController implements Initializable {
     private Button button_limpar;
 
     @FXML
-    private MenuButton menuButton_atributoLivro;
+    private MenuButton menuButton_tipoDeMaterial;
 
     @FXML
     private Label label_descricaoBusca;
 
-    private Alert alert;
+    @FXML
+    private MenuButton menuButton_atributo;
+
+    @FXML
+    private Label label_busca;
+
+    @FXML
+    private TableView<?> tableView_busca;
+
+    @FXML
+    private TableColumn<?, ?> atributo_1;
+
+    @FXML
+    private TableColumn<?, ?> atributo_2;
+
+    @FXML
+    private TableColumn<?, ?> atributo_3;
+
+    @FXML
+    private TableColumn<?, ?> atributo_4;
+
+    @FXML
+    private TableColumn<?, ?> atributo_5;
+
+    @FXML
+    private TableColumn<?, ?> atributo_6;
     
-    private UsuarioService usuarioService;
+    private Alert alert;
     
     /// MÉTODOS **********************************************************************************
     
@@ -97,7 +119,7 @@ public class FXMLTelaInicialController implements Initializable {
 
     @FXML
     void limpaCaixaDeTexto() {
-        textField_atributoLivro.setText("");
+        textField_busca.setText("");
     }
 
     @FXML
