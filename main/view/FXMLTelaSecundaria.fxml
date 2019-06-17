@@ -31,7 +31,7 @@
         </items>
       </MenuButton>
       <Label fx:id="label_busca" layoutX="79.0" layoutY="131.0" text="Busca:" />
-      <TextField fx:id="textField_busca" layoutX="121.0" layoutY="127.0" prefHeight="25.0" prefWidth="243.0" />
+      <TextField fx:id="textField_busca" layoutX="121.0" layoutY="127.0" prefHeight="25.0" prefWidth="243.0" promptText="Digite de acordo com o atributo buscado" />
       <MenuButton fx:id="menuButton_atributo" layoutX="373.0" layoutY="127.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Atributo:">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />

@@ -7,19 +7,26 @@ package control;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import service.UsuarioService;
+import view.TelaInicial;
+import view.TelaSecundaria;
 
 
 /**
@@ -28,7 +35,6 @@ import service.UsuarioService;
 public class FXMLTelaInicialController implements Initializable {
     
     /// ATRIBUTOS ********************************************************************************
-    
     @FXML
     private Label label_login;
 
@@ -60,10 +66,22 @@ public class FXMLTelaInicialController implements Initializable {
     private MenuButton menuButton_tipoDeMaterial;
 
     @FXML
+    private MenuItem menuItem_livro;
+
+    @FXML
     private Label label_descricaoBusca;
 
     @FXML
     private MenuButton menuButton_atributo;
+
+    @FXML
+    private MenuItem menuItem_titulo;
+
+    @FXML
+    private MenuItem menuItem_autor;
+
+    @FXML
+    private MenuItem menuItem_editora;
 
     @FXML
     private Label label_busca;
@@ -90,6 +108,7 @@ public class FXMLTelaInicialController implements Initializable {
     private TableColumn<?, ?> atributo_6;
     
     private Alert alert;
+    private UsuarioService usuarioService;
     
     /// MÉTODOS **********************************************************************************
     
@@ -98,34 +117,81 @@ public class FXMLTelaInicialController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        menuButton_atributo.getItems().clear();
+        tableView_busca.getColumns().clear();
+        
     }    
     
     @FXML
-    void acaoAutenticarLogin() {
-        /// REALIZA-SE A CHAMADA DE AUTENTICACAO PARA SERVICO
+    void selecionarMaterial(ActionEvent event) {
+    
+    }
+    
+
+    @FXML
+    void desAtivadoAutor(ActionEvent event) {
+
+    }
+
+    @FXML
+    void desAtivadoEditora(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void desAtivadoTitulo(ActionEvent event) {
+
+    }
+    @FXML
+    void limpaCaixaDeTexto(ActionEvent event) {
+
+    }
+
+    @FXML
+    void pesquisaNoBancoEMostra(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void buscaEmLivro(ActionEvent event) {
         
-        if( textField_login.getText().equals("admin") && passwordField_senha.getText().equals("legal") )
-             System.out.println("CORRETO");
-        else{
+        menuButton_atributo.getItems().clear();
+        menuButton_atributo.getItems().add(menuItem_titulo);
+        menuButton_atributo.getItems().add(menuItem_autor);
+        menuButton_atributo.getItems().add(menuItem_editora);
+    
+    }
+
+    @FXML
+    void acaoAutenticarLogin(ActionEvent event) {
+        
+        if( textField_login.getText().equals("admin") && passwordField_senha.getText().equals("legal") ){
+            TelaSecundaria telaSecundaria = new TelaSecundaria();
+            fechar();
+            try {
+                telaSecundaria.start(new Stage());
+            } catch (Exception ex) {
+                Logger.getLogger(FXMLTelaInicialController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erro");
             alert.setHeaderText("Erro na autenticação de usuário!");
             alert.setContentText("Senha incorreta!");
             alert.show();
         }    
-        
+
     }
 
-    @FXML
     void limpaCaixaDeTexto() {
         textField_busca.setText("");
     }
 
-    @FXML
     void pesquisaNoBancoEMostra() {
 
     }
     
-    
+    private void fechar(){
+        TelaInicial.getStage().close();
+    }
 }
