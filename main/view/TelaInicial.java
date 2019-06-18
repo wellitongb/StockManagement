@@ -32,7 +32,7 @@ public class TelaInicial extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLTelaInicial.fxml"));
         
         Scene scene = new Scene(root);
-        stage.setTitle("StockManagement_Biblioteca");
+        stage.setTitle("StockManagement - Biblioteca");
         stage.setScene(scene);
         stage.getIcons().add(new Image("img/bibliotecaIcone.png"));
         stage.show();

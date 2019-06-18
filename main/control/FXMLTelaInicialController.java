@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.tiposMaterial.Livro;
 
 import service.UsuarioService;
 import view.TelaInicial;
@@ -87,7 +89,7 @@ public class FXMLTelaInicialController implements Initializable {
     private Label label_busca;
 
     @FXML
-    private TableView<?> tableView_busca;
+    private TableView<Livro> tableView_busca;
 
     @FXML
     private TableColumn<?, ?> atributo_1;
@@ -130,21 +132,25 @@ public class FXMLTelaInicialController implements Initializable {
 
     @FXML
     void desAtivadoAutor(ActionEvent event) {
-
+        menuButton_atributo.setText(menuItem_autor.getText());
     }
 
     @FXML
     void desAtivadoEditora(ActionEvent event) {
+        menuButton_atributo.setText(menuItem_editora.getText());
 
     }
     
     @FXML
     void desAtivadoTitulo(ActionEvent event) {
+        menuButton_atributo.setText(menuItem_titulo.getText());
 
     }
     @FXML
-    void limpaCaixaDeTexto(ActionEvent event) {
-
+    void limpaCaixaDeTexto() {
+        textField_busca.setText("");
+        menuButton_atributo.setText("Atributo:");
+        menuButton_tipoDeMaterial.setText("Tipo de material:");
     }
 
     @FXML
@@ -153,13 +159,20 @@ public class FXMLTelaInicialController implements Initializable {
     }
     
     @FXML
-    void buscaEmLivro(ActionEvent event) {
-        
+    void buscaEmLivro(ActionEvent event) {       
+        menuButton_tipoDeMaterial.setText(menuItem_livro.getText());
         menuButton_atributo.getItems().clear();
         menuButton_atributo.getItems().add(menuItem_titulo);
         menuButton_atributo.getItems().add(menuItem_autor);
         menuButton_atributo.getItems().add(menuItem_editora);
-    
+        
+        
+        for(int i = 0; i < 8; i++){
+            TableColumn<Livro, String> atributo = new TableColumn<>("");
+            atributo.setResizable(true);
+            tableView_busca.getColumns().add(atributo);
+        }
+        
     }
 
     @FXML
@@ -183,9 +196,6 @@ public class FXMLTelaInicialController implements Initializable {
 
     }
 
-    void limpaCaixaDeTexto() {
-        textField_busca.setText("");
-    }
 
     void pesquisaNoBancoEMostra() {
 

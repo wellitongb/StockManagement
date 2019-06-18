@@ -10,6 +10,8 @@ import java.util.List;
 /// CLASSE PRÓPRIA
 import service.UsuarioService;
 import exception.ControlException;
+import model.Material;
+import model.Usuario;
 
 /**
  * Classe abstrata controladora de tela usuario
@@ -21,6 +23,8 @@ public abstract class UsuarioControl {
     /// ATRIBUTOS ********************************************************************************
     
     protected UsuarioService usuarioService;
+    protected Usuario usuario;
+    protected Material material;
     
     /// CONSTRUTOR *******************************************************************************
     

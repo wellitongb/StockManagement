@@ -6,6 +6,8 @@
 package view;
 
 import control.MaterialControl;
+import model.Material;
+import model.Usuario;
 
 /**
  * Representa uma tela de material genérico
@@ -16,6 +18,8 @@ public abstract class MaterialView {
     /// ATRIBUTOS ********************************************************************************
     
     protected MaterialControl materialControl;
+    protected Usuario usuario;
+    protected Material material;
 
     /// CONSTRUTOR *******************************************************************************
     

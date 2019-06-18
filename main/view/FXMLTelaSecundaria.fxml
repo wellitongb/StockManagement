@@ -14,25 +14,25 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="729.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.FXMLTelaSecundariaController">
    <children>
       <Label fx:id="label_tipoDeUsuario" layoutX="24.0" layoutY="23.0" text="Tipo de usuario" />
-      <Label fx:id="label_nomeUsuario" layoutX="121.0" layoutY="23.0" text="Nome do usuario" />
-      <Label fx:id="label_hora" layoutX="506.0" layoutY="23.0" text="Hora:" />
-      <Label fx:id="hora" layoutX="538.0" layoutY="23.0" text="hora" />
-      <Label fx:id="label_data" layoutX="576.0" layoutY="23.0" text="Data:" />
-      <Label fx:id="data" layoutX="606.0" layoutY="23.0" text="Data" />
+      <Label fx:id="label_nomeUsuario" layoutX="141.0" layoutY="23.0" text="Nome do usuario" />
+      <Label fx:id="label_hora" layoutX="627.0" layoutY="23.0" text="Hora:" />
+      <Label fx:id="hora" layoutX="664.0" layoutY="23.0" text="hora" />
+      <Label fx:id="label_data" layoutX="512.0" layoutY="23.0" text="Data:" />
+      <Label fx:id="data" layoutX="549.0" layoutY="23.0" text="Data" />
       <Label fx:id="label_descricaoBusca" layoutX="182.0" layoutY="53.0" text="SELECIONE OS CAMPOS PARA A BUSCA">
          <font>
             <Font size="19.0" />
          </font>
       </Label>
-      <MenuButton layoutX="282.0" layoutY="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="126.0" text="Tipo de busca:">
+      <MenuButton layoutX="282.0" layoutY="91.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Tipo de busca:">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />
           <MenuItem mnemonicParsing="false" text="Action 2" />
         </items>
       </MenuButton>
       <Label fx:id="label_busca" layoutX="79.0" layoutY="131.0" text="Busca:" />
-      <TextField fx:id="textField_busca" layoutX="121.0" layoutY="127.0" prefHeight="25.0" prefWidth="243.0" promptText="Digite de acordo com o atributo buscado" />
-      <MenuButton fx:id="menuButton_atributo" layoutX="373.0" layoutY="127.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Atributo:">
+      <TextField fx:id="textField_busca" layoutX="122.0" layoutY="127.0" prefHeight="25.0" prefWidth="243.0" promptText="Digite de acordo com o atributo buscado" />
+      <MenuButton fx:id="menuButton_atributo" layoutX="373.0" layoutY="127.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="101.0" text="Atributo:">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />
           <MenuItem mnemonicParsing="false" text="Action 2" />

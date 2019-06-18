@@ -14,15 +14,15 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.FXMLTelaInicialController">
    <children>
-      <Label fx:id="label_login" layoutX="116.0" layoutY="22.0" text="Login:" />
-      <TextField fx:id="textField_login" layoutX="151.0" layoutY="18.0" promptText="Digite aqui seu login" />
-      <Label fx:id="label_senha" layoutX="309.0" layoutY="22.0" text="Senha:" />
-      <Button fx:id="button_Entrar" layoutX="511.0" layoutY="18.0" mnemonicParsing="false" onAction="#acaoAutenticarLogin" text="Entrar" />
+      <Label fx:id="label_login" layoutX="73.0" layoutY="22.0" text="Login:" />
+      <TextField fx:id="textField_login" layoutX="116.0" layoutY="18.0" promptText="Digite aqui seu login" />
+      <Label fx:id="label_senha" layoutX="298.0" layoutY="22.0" text="Senha:" />
+      <Button fx:id="button_Entrar" layoutX="521.0" layoutY="18.0" mnemonicParsing="false" onAction="#acaoAutenticarLogin" text="Entrar" />
       <Separator fx:id="separator_loginEbusca" layoutX="40.0" layoutY="58.0" prefHeight="5.0" prefWidth="521.0" />
       <PasswordField fx:id="passwordField_senha" layoutX="347.0" layoutY="18.0" promptText="Digite aqui sua senha" />
-      <TextField fx:id="textField_busca" layoutX="118.0" layoutY="140.0" prefHeight="25.0" prefWidth="187.0" />
-      <Button fx:id="buttton_pesquisar" layoutX="401.0" layoutY="140.0" mnemonicParsing="false" onAction="#pesquisaNoBancoEMostra" text="Pesquisar" />
-      <Button fx:id="button_limpar" layoutX="475.0" layoutY="140.0" mnemonicParsing="false" onAction="#limpaCaixaDeTexto" text="Limpar" />
+      <TextField fx:id="textField_busca" layoutX="121.0" layoutY="140.0" prefHeight="26.0" prefWidth="207.0" />
+      <Button fx:id="buttton_pesquisar" layoutX="423.0" layoutY="140.0" mnemonicParsing="false" onAction="#pesquisaNoBancoEMostra" text="Pesquisar" />
+      <Button fx:id="button_limpar" layoutX="501.0" layoutY="140.0" mnemonicParsing="false" onAction="#limpaCaixaDeTexto" text="Limpar" />
       <MenuButton fx:id="menuButton_tipoDeMaterial" layoutX="233.0" layoutY="98.0" mnemonicParsing="false" onAction="#selecionarMaterial" text="Tipo de material:">
         <items>
           <MenuItem fx:id="menuItem_livro" mnemonicParsing="false" onAction="#buscaEmLivro" text="Livro" />
@@ -33,14 +33,14 @@
             <Font size="19.0" />
          </font>
       </Label>
-      <MenuButton fx:id="menuButton_atributo" layoutX="314.0" layoutY="140.0" mnemonicParsing="false" text="Atributo:">
+      <MenuButton fx:id="menuButton_atributo" layoutX="333.0" layoutY="140.0" mnemonicParsing="false" text="Atributo:">
          <items>
             <MenuItem fx:id="menuItem_titulo" mnemonicParsing="false" onAction="#desAtivadoTitulo" text="Titulo" />
             <MenuItem fx:id="menuItem_autor" mnemonicParsing="false" onAction="#desAtivadoAutor" text="Autor" />
             <MenuItem fx:id="menuItem_editora" mnemonicParsing="false" onAction="#desAtivadoEditora" text="Editora" />
          </items>
       </MenuButton>
-      <Label fx:id="label_busca" layoutX="73.0" layoutY="144.0" text="Busca:">
+      <Label fx:id="label_busca" layoutX="67.0" layoutY="144.0" text="Busca:">
          <font>
             <Font size="15.0" />
          </font>

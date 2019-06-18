@@ -105,13 +105,24 @@ public class FXMLTelaSecundariaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         inicializaHoraData();
+        
     }    
 
     private void inicializaHoraData(){
     
         LocalDateTime dt = LocalDateTime.now();
-        String dataAtual = dt.getDayOfMonth() + "/" + dt.getMonth() + "/" + dt.getYear();
-        String horaAtual = dt.getHour() + ":" + dt.getMinute();
+        String dataAtual = dt.getDayOfMonth() + "/"; 
+        
+        if(dt.getMonthValue() <= 10) dataAtual += "0" + dt.getMonthValue() + "/" + dt.getYear();
+        if(dt.getMonthValue() > 9) dataAtual += dt.getMonthValue() + "/" + dt.getYear();
+        
+        String horaAtual = "";
+        if(dt.getHour() <= 10) horaAtual += "0" + dt.getHour() + ":";
+        if(dt.getHour() > 9) horaAtual += dt.getHour() + ":";
+        
+        if(dt.getMinute() <= 10) horaAtual += "0" + dt.getMinute();
+        if(dt.getMinute() > 9) horaAtual += dt.getMinute();
+      
         data.setText(dataAtual);
         hora.setText(horaAtual);
     }
