@@ -1,6 +1,6 @@
 package service;
 
-import service.raqueamento.IRankingUsuarioStrategy;
+import service.ranqueamento.IRankingUsuarioStrategy;
 import java.util.List;
 
 import dao.ClienteJpaController;

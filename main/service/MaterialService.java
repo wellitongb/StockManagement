@@ -1,7 +1,7 @@
 package service;
 
 /// CLASSES PRÓPRIAS
-import service.raqueamento.IRankingMaterialStrategy;
+import service.ranqueamento.IRankingMaterialStrategy;
 import model.Material;
 import dao.IMaterialDAO;
 import exception.ServiceException;

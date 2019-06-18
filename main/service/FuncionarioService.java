@@ -5,7 +5,7 @@ import exception.DAOException;
 import exception.ServiceException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import service.raqueamento.IRankingUsuarioStrategy;
+import service.ranqueamento.IRankingUsuarioStrategy;
 import java.util.List;
 
 import model.Usuario;

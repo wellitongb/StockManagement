@@ -2,7 +2,7 @@ package service;
 
 import java.util.List;
 
-import service.raqueamento.IRankingMaterialStrategy;
+import service.ranqueamento.IRankingMaterialStrategy;
 import dao.LivroJpaController;
 import exception.DAOException;
 import exception.ServiceException;

@@ -1,5 +1,5 @@
 
-package service.raqueamento;
+package service.ranqueamento;
 
 import java.util.Collections;
 import java.util.Comparator;

@@ -1,4 +1,4 @@
-package service.raqueamento;
+package service.ranqueamento;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package service;
 
 /// CLASSES PRÓPRIAS
-import service.raqueamento.IRankingUsuarioStrategy;
+import service.ranqueamento.IRankingUsuarioStrategy;
 import model.Usuario;
 import dao.IUsuarioDAO;
 import exception.ServiceException;
